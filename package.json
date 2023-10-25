@@ -8,18 +8,25 @@
   "scripts": {
     "dev": "concurrently -n api,web -c yellow,cyan \"npm run dev -w apps/api\" \"npm run dev -w apps/web\"",
     "build": "npm run build --workspaces --if-present",
-    "typecheck": "npm run typecheck --workspaces --if-present",
+    "setup": "tsx scripts/setup.ts",
+    "db:check": "tsx scripts/check-db.ts",
     "db:migrate": "prisma migrate deploy",
     "db:migrate:dev": "prisma migrate dev",
     "db:generate": "prisma generate",
+    "db:seed": "prisma db seed",
+    "db:reset": "prisma migrate reset --force",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "typecheck": "npm run typecheck --workspaces --if-present"
   },
   "devDependencies": {
     "concurrently": "^7.6.0",
     "prisma": "^4.10.1",
     "vitest": "^0.31.0",
-    "dotenv": "^16.0.3"
+    "dotenv": "^16.0.3",
+    "tsx": "^3.14.0",
+    "mysql2": "^3.6.2",
+    "bcryptjs": "^2.4.3"
   },
   "engines": {
     "node": ">=18"
@@ -28,6 +35,7 @@
     "@prisma/client": "^4.10.1"
   },
   "prisma": {
-    "schema": "prisma/schema.prisma"
+    "schema": "prisma/schema.prisma",
+    "seed": "tsx prisma/seed/index.ts"
   }
 }
