@@ -42,7 +42,7 @@ export default function Layout() {
             <Link to="/my/invoices">My invoices</Link>
           </>
         )}
-        <Link to="/hiring">Hiring Hall</Link>
+        {hasRole(user, 'OVERLORD', 'ADMIN', 'FRONT_DESK', 'KEEPER', 'VET') && <Link to="/hiring">Hiring Hall</Link>}
         {hasRole(user, 'VET', 'ADMIN') && <Link to="/vet">Vet</Link>}
         {hasRole(user, 'ADMIN') && <Link to="/admin/users">Users</Link>}
       </nav>
