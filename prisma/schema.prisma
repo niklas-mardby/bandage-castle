@@ -556,3 +556,66 @@ model HireContract {
   @@index([customerId])
   @@map("hire_contracts")
 }
+
+// ---------------------------------------------------------------------------
+// Billing v2 (2024): all money in integer copper pieces. 1 gp = 100 cp.
+// ---------------------------------------------------------------------------
+
+model InvoiceV2 {
+  id              Int       @id @default(autoincrement())
+  /// set when the invoice was copied over from tbl_invoice
+  legacyInvoiceId Int?      @unique @map("legacy_invoice_id")
+  stayId          Int?      @map("stay_id")
+  customerId      Int       @map("customer_id")
+  /// BC-2024-000123
+  number          String    @unique @db.VarChar(20)
+  /// DRAFT | ISSUED | PAID | VOID
+  status          String    @default("DRAFT") @db.VarChar(16)
+  issuedAt        DateTime? @map("issued_at")
+  dueAt           DateTime? @map("due_at") @db.Date
+  subtotalCopper  Int       @default(0) @map("subtotal_copper")
+  totalCopper     Int       @default(0) @map("total_copper")
+  notes           String?   @db.Text
+  createdAt       DateTime  @default(now()) @map("created_at")
+  updatedAt       DateTime  @updatedAt @map("updated_at")
+
+  lines    InvoiceLineV2[]
+  payments PaymentV2[]
+
+  @@index([customerId])
+  @@index([stayId])
+  @@map("invoices_v2")
+}
+
+model InvoiceLineV2 {
+  id           Int    @id @default(autoincrement())
+  invoiceId    Int    @map("invoice_id")
+  description  String @db.VarChar(255)
+  quantity     Int    @default(1)
+  unitCopper   Int    @map("unit_copper")
+  amountCopper Int    @map("amount_copper")
+  /// STAY | TREATMENT | THERAPY | LATE_FEE | DISCOUNT | OTHER
+  kind         String @default("OTHER") @db.VarChar(16)
+  position     Int    @default(0)
+
+  invoice InvoiceV2 @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+
+  @@index([invoiceId])
+  @@map("invoice_lines_v2")
+}
+
+model PaymentV2 {
+  id           Int      @id @default(autoincrement())
+  invoiceId    Int      @map("invoice_id")
+  amountCopper Int      @map("amount_copper")
+  /// GOLD | GEMS | IOU | FAVOUR
+  method       String   @db.VarChar(16)
+  receivedAt   DateTime @default(now()) @map("received_at")
+  receivedById Int?     @map("received_by_id")
+  note         String?  @db.VarChar(255)
+
+  invoice InvoiceV2 @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+
+  @@index([invoiceId])
+  @@map("payments_v2")
+}

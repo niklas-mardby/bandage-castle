@@ -70,9 +70,10 @@ router.post(
 
 ## 💰 Money
 
-- ✅ Money is stored as `DECIMAL(10,2)` gold pieces (gp).
-- ✅ Format money for display with the helpers in `packages/shared/src/money.ts`. Don't write your own formatter.
-- 🚫 Be careful with floating-point arithmetic on gold. A dragon will notice the missing copper. 🐉
+- ✅ **Money is always an integer number of copper pieces.** 1 gold piece (gp) = 100 copper pieces (cp). See [ADR-006](adr/006-money-as-copper.md).
+- ✅ Columns are named `*_copper` and are `INT`.
+- ✅ Convert to gold only at the edge, for display, with `formatCopper()` from `packages/shared/src/money.ts`.
+- 🚫 Never do arithmetic on floating-point gold. A dragon will notice the missing copper. 🐉
 
 ---
 
