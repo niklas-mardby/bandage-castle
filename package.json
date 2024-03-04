@@ -20,7 +20,8 @@
     "typecheck": "npm run typecheck --workspaces --if-present",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "billing:backfill": "tsx scripts/backfill-billing-v2.ts"
   },
   "devDependencies": {
     "concurrently": "^8.2.2",
