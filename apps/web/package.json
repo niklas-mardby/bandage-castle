@@ -12,7 +12,9 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.20.1",
-    "@bandage/shared": "*"
+    "@bandage/shared": "*",
+    "@tanstack/react-query": "^5.24.1",
+    "date-fns": "^3.3.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.42",
