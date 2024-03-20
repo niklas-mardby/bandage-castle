@@ -2,6 +2,7 @@ import express from 'express'
 import { query, q } from '../db'
 import { checkAuth, staffOnly } from '../middleware/checkAuth'
 import { createInvoiceForStay } from './billing'
+import { billingV2Enabled, legacyShapedInvoice } from './v2bridge'
 
 const router = express.Router()
 
@@ -24,6 +25,14 @@ router.get('/invoices', checkAuth, (req: any, res) => {
 })
 
 router.get('/invoices/:id', checkAuth, async (req: any, res) => {
+  // Billing v2 preview
+  if (billingV2Enabled()) {
+    try {
+      return res.json(await legacyShapedInvoice(Number(req.params.id)))
+    } catch (e) {
+      console.log('v2 bridge failed, falling back to v1', e)
+    }
+  }
   try {
     const rows = await q(
       'SELECT i.*, c.first_name, c.last_name, c.title, c.lair_address FROM tbl_invoice i JOIN tbl_customer c ON c.id = i.customer_id WHERE i.id = ?',

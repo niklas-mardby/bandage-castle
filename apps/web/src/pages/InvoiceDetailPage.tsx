@@ -40,7 +40,9 @@ class InvoiceDetail extends React.Component<{ id: string }, State> {
 
     return (
       <div className="page invoice">
-        <h2>Invoice #{inv.id}</h2>
+        <h2>
+          Invoice #{inv.id} {inv.billing_version === 2 && <span className="badge badge-ok">v2 ✨</span>}
+        </h2>
         <p>
           To: {inv.title} {inv.first_name} {inv.last_name}
           <br />
