@@ -1,7 +1,9 @@
 // Raven Post - sends messages to customers.
+// DEPRECATED (2024): use NotificationService in modules/notifications instead. See ADR-007.
 // ravens are "sent" by the flush loop. for now it just logs.
 import { query, q } from '../db'
 
+/** @deprecated Use NotificationService.notifyCustomer() instead (ADR-007). */
 export function sendRaven(customerId: any, subject: string, body: string, cb?: any) {
   query('INSERT INTO tbl_raven (customer_id, subject, body) VALUES (?,?,?)', [customerId, subject, body], (err: any, result: any) => {
     if (err) {

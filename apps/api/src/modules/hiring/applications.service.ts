@@ -2,6 +2,7 @@ import { prisma } from '../../db/prisma'
 import { BadRequestError, ConflictError, ForbiddenError, NotFoundError } from '../../errors/httpErrors'
 import { sendRaven } from '../../legacy/ravenPost/ravenPost'
 import { contractReference, STANDARD_TERMS } from './reference'
+import { NotificationService } from '../notifications/notification.service'
 
 export type ApplyInput = {
   message: string
@@ -23,7 +24,7 @@ export async function apply(listingId: number, customerId: number | null, input:
   const existing = await prisma.hiringApplication.findFirst({ where: { listingId, customerId, status: 'PENDING' } })
   if (existing) throw new ConflictError('You already applied for this monster')
 
-  return prisma.hiringApplication.create({
+  const application = await prisma.hiringApplication.create({
     data: {
       listingId,
       customerId,
@@ -33,6 +34,13 @@ export async function apply(listingId: number, customerId: number | null, input:
     },
     include,
   })
+  await NotificationService.notifyRole(
+    ['FRONT_DESK', 'ADMIN'],
+    `New application for ${application.listing.monster.name}`,
+    'An overlord wants to hire one of our monsters.',
+    '/hiring/applications',
+  )
+  return application
 }
 
 export async function listApplications(opts: { customerId?: number; status?: string }) {

@@ -1,6 +1,7 @@
 import { Link, Outlet, useNavigate } from 'react-router-dom'
 import { hasRole } from '@bandage/shared'
 import { useAuth } from '../auth/AuthProvider'
+import NotificationBell from './NotificationBell'
 
 export default function Layout() {
   const { user, logout } = useAuth()
@@ -17,7 +18,7 @@ export default function Layout() {
       <nav className="nav">
         {user && (
           <span className="nav-user">
-            {user.name || user.email} <button onClick={doLogout}>log out</button>
+            <NotificationBell /> {user.name || user.email} <button onClick={doLogout}>log out</button>
           </span>
         )}
         <Link to="/">Home</Link>

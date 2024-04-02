@@ -2,6 +2,8 @@ import { addDays } from 'date-fns'
 import { prisma } from '../../db/prisma'
 import { BadRequestError, NotFoundError } from '../../errors/httpErrors'
 import { buildLines, invoiceNumber, totalOf } from './engine'
+import { NotificationService } from '../notifications/notification.service'
+import { formatGold } from '../../utils/formatGold'
 
 const PAYMENT_TERMS_DAYS = 30
 
@@ -116,6 +118,11 @@ export async function createFromStay(stayId: number) {
     },
     include,
   })
+  await NotificationService.notifyCustomer(
+    stay.customerId,
+    `Invoice ${invoice.number}`,
+    `Your invoice of ${formatGold(total)} is ready. Please pay within ${PAYMENT_TERMS_DAYS} days.`,
+  )
   return withPaid(invoice)
 }
 
