@@ -12,6 +12,7 @@ import { medicalRouter } from './modules/medical/medical.routes'
 import { ticketsRouter } from './modules/tickets/tickets.routes'
 import { suppliesRouter } from './modules/supplies/supplies.routes'
 import { stayExtensionsRouter } from './modules/stays/extensions.routes'
+import { staysRouter } from './modules/stays/stays.routes'
 import { feedingRouter } from './modules/feeding/feeding.routes'
 import { hiringRouter } from './modules/hiring/hiring.routes'
 import { flagsRouter } from './modules/flags/flags.routes'
@@ -42,7 +43,7 @@ export function createApp() {
   app.use('/api/flags', flagsRouter)
   app.use('/api/v2/billing', billingV2Router)
   app.use('/api/notifications', notificationsRouter)
-  app.use('/api/stays', stayExtensionsRouter) // the rest of /api/stays is in legacy
+  app.use('/api/stays', stayExtensionsRouter, staysRouter) // the rest of /api/stays is in legacy
 
   // pre-2023 routes
   app.use('/api', legacyRouter)
