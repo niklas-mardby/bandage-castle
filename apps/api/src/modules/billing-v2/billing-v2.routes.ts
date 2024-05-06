@@ -1,6 +1,8 @@
 import { Router } from 'express'
 import { asyncHandler } from '../../middleware/asyncHandler'
 import { requireRole } from '../../middleware/requireRole'
+import { z } from 'zod'
+import { validate } from '../../middleware/validate'
 import * as billing from './billing-v2.service'
 
 export const billingV2Router = Router()
@@ -34,6 +36,20 @@ billingV2Router.post(
   '/invoices/from-stay/:stayId',
   asyncHandler(async (req, res) => {
     res.status(201).json(await billing.createFromStay(Number(req.params.stayId)))
+  }),
+)
+
+const paymentSchema = z.object({
+  amountCopper: z.number().int().positive(),
+  method: z.enum(['GOLD', 'GEMS', 'IOU', 'FAVOUR']),
+  note: z.string().max(255).optional(),
+})
+
+billingV2Router.post(
+  '/invoices/:id/payments',
+  validate(paymentSchema),
+  asyncHandler(async (req, res) => {
+    res.status(201).json(await billing.recordPayment(Number(req.params.id), req.body, req.user!.id))
   }),
 )
 

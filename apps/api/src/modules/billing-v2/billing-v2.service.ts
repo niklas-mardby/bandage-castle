@@ -126,6 +126,24 @@ export async function createFromStay(stayId: number) {
   return withPaid(invoice)
 }
 
+export async function recordPayment(id: number, input: { amountCopper: number; method: string; note?: string }, staffId: number) {
+  const invoice = await prisma.invoiceV2.findUnique({ where: { id }, include: { payments: true } })
+  if (!invoice) throw new NotFoundError('Invoice')
+  if (invoice.status === 'VOID') throw new BadRequestError('This invoice is void')
+  if (invoice.status === 'PAID') throw new BadRequestError('Already paid in full')
+
+  const paid = invoice.payments.reduce((s, p) => s + p.amountCopper, 0)
+  const remaining = invoice.totalCopper - paid
+  if (input.amountCopper > remaining) throw new BadRequestError(`Only ${formatGold(remaining)} is outstanding`)
+
+  return prisma.$transaction(async (tx) => {
+    await tx.paymentV2.create({ data: { invoiceId: id, amountCopper: input.amountCopper, method: input.method, note: input.note, receivedById: staffId } })
+    const fullyPaid = input.amountCopper === remaining
+    const updated = await tx.invoiceV2.update({ where: { id }, data: { status: fullyPaid ? 'PAID' : invoice.status }, include })
+    return withPaid(updated)
+  })
+}
+
 export async function voidInvoice(id: number) {
   const invoice = await prisma.invoiceV2.findUnique({ where: { id } })
   if (!invoice) throw new NotFoundError('Invoice')
