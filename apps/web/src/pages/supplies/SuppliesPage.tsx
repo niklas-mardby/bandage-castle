@@ -55,6 +55,47 @@ function MovementForm({ supply, onDone }: { supply: Supply; onDone: () => void }
   )
 }
 
+function NewSupplyForm({ onCreated }: { onCreated: () => void }) {
+  const [open, setOpen] = useState(false)
+  const [s, setS] = useState({ name: '', category: 'FOOD', unit: 'kg', quantity: '0', lowStockThreshold: '', supplier: '' })
+  const [error, setError] = useState('')
+
+  if (!open) return <button onClick={() => setOpen(true)}>+ New supply</button>
+
+  const save = async () => {
+    setError('')
+    try {
+      await apiFetch('/supplies', {
+        method: 'POST',
+        body: { ...s, quantity: Number(s.quantity), lowStockThreshold: Number(s.lowStockThreshold), supplier: s.supplier || null },
+      })
+      setOpen(false)
+      setS({ name: '', category: 'FOOD', unit: 'kg', quantity: '0', lowStockThreshold: '', supplier: '' })
+      onCreated()
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Failed')
+    }
+  }
+
+  return (
+    <div className="form inline wrap">
+      <input placeholder="name" value={s.name} onChange={(e) => setS({ ...s, name: e.target.value })} />
+      <select value={s.category} onChange={(e) => setS({ ...s, category: e.target.value })}>
+        {Object.keys(CATEGORY_ICON).map((c) => (
+          <option key={c}>{c}</option>
+        ))}
+      </select>
+      <input className="small" placeholder="unit" value={s.unit} onChange={(e) => setS({ ...s, unit: e.target.value })} />
+      <input className="small" placeholder="qty" value={s.quantity} onChange={(e) => setS({ ...s, quantity: e.target.value })} />
+      <input className="small" placeholder="reorder at" value={s.lowStockThreshold} onChange={(e) => setS({ ...s, lowStockThreshold: e.target.value })} />
+      <input placeholder="supplier" value={s.supplier} onChange={(e) => setS({ ...s, supplier: e.target.value })} />
+      <button onClick={save}>Add</button>
+      <button onClick={() => setOpen(false)}>Cancel</button>
+      {error && <span className="error">{error}</span>}
+    </div>
+  )
+}
+
 export default function SuppliesPage() {
   const [category, setCategory] = useState('')
   const { data: supplies, error, reload } = useApi<Supply[]>(`/supplies${category ? `?category=${category}` : ''}`)
@@ -73,6 +114,7 @@ export default function SuppliesPage() {
         </div>
       )}
       <div className="toolbar">
+        <NewSupplyForm onCreated={reload} />
         <select value={category} onChange={(e) => setCategory(e.target.value)}>
           <option value="">All categories</option>
           {Object.entries(CATEGORY_ICON).map(([c, icon]) => (
