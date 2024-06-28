@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { apiFetch } from '../api'
 import { formatGP } from '../money'
+import { formatDay } from '../utils/dates'
 
 type State = { invoices: any[]; loading: boolean; filter: string }
 
@@ -46,8 +47,8 @@ export default class InvoiceListPage extends React.Component<any, State> {
                   <td>
                     {i.title} {i.first_name} {i.last_name}
                   </td>
-                  <td>{i.issued_at && i.issued_at.slice(0, 10)}</td>
-                  <td>{i.due_date && i.due_date.slice(0, 10)}</td>
+                  <td>{formatDay(i.issued_at)}</td>
+                  <td>{formatDay(i.due_date)}</td>
                   <td>{formatGP(i.total)}</td>
                   <td>{i.status}</td>
                 </tr>
