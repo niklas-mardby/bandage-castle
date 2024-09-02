@@ -6,6 +6,7 @@ export const TICKET_CATEGORIES = ['MAINTENANCE', 'ESCAPE', 'CLEANING', 'SUPPLIES
 
 export const listQuerySchema = z.object({
   status: z.enum(TICKET_STATUSES).optional(),
+  priority: z.enum(TICKET_PRIORITIES).optional(),
   assigneeId: z.coerce.number().int().positive().optional(),
   mine: z.coerce.boolean().optional(),
   cursor: z.coerce.number().int().positive().optional(),

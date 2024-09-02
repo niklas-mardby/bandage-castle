@@ -9,6 +9,7 @@ type Page = { items: Ticket[]; nextCursor: number | null }
 export default function TicketListPage() {
   const [status, setStatus] = useState('')
   const [mine, setMine] = useState(false)
+  const [priority, setPriority] = useState('')
   const [tickets, setTickets] = useState<Ticket[]>([])
   const [nextCursor, setNextCursor] = useState<number | null>(null)
   const [loading, setLoading] = useState(false)
@@ -16,6 +17,7 @@ export default function TicketListPage() {
   const query = (cursor?: number) => {
     const params = new URLSearchParams()
     if (status) params.set('status', status)
+    if (priority) params.set('priority', priority)
     if (mine) params.set('mine', 'true')
     if (cursor) params.set('cursor', String(cursor))
     return `/tickets?${params.toString()}`
@@ -31,7 +33,7 @@ export default function TicketListPage() {
       })
       .finally(() => setLoading(false))
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [status, mine])
+  }, [status, mine, priority])
 
   const loadMore = async () => {
     if (!nextCursor) return
@@ -52,6 +54,14 @@ export default function TicketListPage() {
           {Object.entries(STATUS_LABEL).map(([value, label]) => (
             <option key={value} value={value}>
               {label}
+            </option>
+          ))}
+        </select>
+        <select value={priority} onChange={(e) => setPriority(e.target.value)}>
+          <option value="">Any priority</option>
+          {Object.entries(PRIORITY_ICON).map(([p, icon]) => (
+            <option key={p} value={p}>
+              {icon} {p.toLowerCase()}
             </option>
           ))}
         </select>

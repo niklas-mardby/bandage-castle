@@ -14,6 +14,7 @@ const listInclude = {
 export async function listTickets(query: ListQuery, userId: number) {
   const where: Prisma.TicketWhereInput = {}
   if (query.status) where.status = query.status
+  if (query.priority) where.priority = query.priority
   if (query.assigneeId) where.assigneeId = query.assigneeId
   if (query.mine) where.assigneeId = userId
 
