@@ -11,5 +11,6 @@ Big decisions about how the castle is built, written down so future developers k
 | [005](005-httponly-cookie-sessions.md) | Sessions in an httpOnly cookie | ✅ Accepted |
 | [006](006-money-as-copper.md) | Money is stored as integer copper | ✅ Accepted |
 | [007](007-notifications-replace-raven-post.md) | NotificationService replaces Raven Post | ✅ Accepted |
+| [008](008-redis-cache.md) | Redis cache for slow reads | ⚰️ Superseded (removed) |
 
 New ADR? Copy the newest one, bump the number, and open a PR. 📝
