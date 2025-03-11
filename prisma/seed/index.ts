@@ -1,36 +1,49 @@
 /* eslint-disable no-console */
-// Minimal seed: one account per role so you can log in. Safe to re-run.
-import bcrypt from 'bcryptjs'
+// 🌱 Bandage Castle demo data.
+//
+// Same data on every machine (fixed random seed), with dates relative to
+// the day you run it so there is always someone checked in "right now".
+//
+// Safe to re-run: if the castle already has species, nothing happens.
+// For a fresh castle: npm run db:reset
 import { PrismaClient } from '@prisma/client'
+import { Rng } from './random'
+import { seedWorld, PASSWORD } from './world'
+import { seedBillingV2Backfill, seedResidents, seedStays } from './stays'
+import { seedHiring, seedMedical, seedNotifications, seedRavens, seedSupplies, seedTickets } from './operations'
+
+const SEED = 20220214 // the day Gorm typed `git init`
 
 const prisma = new PrismaClient()
 
-const PASSWORD = 'castle123'
-
-const ACCOUNTS: { email: string; name: string; roles: string[] }[] = [
-  { email: 'admin@bandage.castle', name: 'Castellan Brumhilde', roles: ['ADMIN'] },
-  { email: 'frontdesk@bandage.castle', name: 'Pip Gatewarden', roles: ['FRONT_DESK'] },
-  { email: 'keeper@bandage.castle', name: 'Old Hobb', roles: ['KEEPER'] },
-  { email: 'vet@bandage.castle', name: 'Dr. Ingrid Splintmoor', roles: ['VET'] },
-]
-
 async function main() {
-  const passwordHash = await bcrypt.hash(PASSWORD, 10)
-  for (const a of ACCOUNTS) {
-    const user = await prisma.user.upsert({
-      where: { email: a.email },
-      update: {},
-      create: { email: a.email, displayName: a.name, passwordHash, role: a.roles[0] },
-    })
-    for (const role of a.roles) {
-      await prisma.userRole.upsert({
-        where: { userId_role: { userId: user.id, role } },
-        update: {},
-        create: { userId: user.id, role },
-      })
-    }
+  if ((await prisma.species.count()) > 0) {
+    console.log('🌱 Seed data is already there, nothing to do. (Fresh start: npm run db:reset)')
+    return
   }
-  console.log(`🌱 Seeded ${ACCOUNTS.length} accounts (password: ${PASSWORD})`)
+  const rng = new Rng(SEED)
+  const t0 = Date.now()
+
+  console.log('🏰 Building the castle...')
+  const world = await seedWorld(prisma, rng)
+  console.log(`   👥 ${Object.keys(world.users).length} accounts, ${world.customers.length} customers`)
+  console.log(`   📖 ${world.species.size} species, 🐉 ${world.monsters.length} monsters, 🏚️ ${world.lairs.length} lairs`)
+
+  const stays = await seedStays(prisma, rng, world)
+  await seedResidents(prisma, rng, world, stays)
+  const backfilled = await seedBillingV2Backfill(prisma)
+  console.log(`   🛏️ ${stays.length} stays, 💰 invoices (${backfilled} copied to Billing v2)`)
+
+  const records = await seedMedical(prisma, rng, world, stays)
+  await seedTickets(prisma, rng, world)
+  await seedSupplies(prisma, rng, world)
+  await seedHiring(prisma, rng, world)
+  await seedRavens(prisma, rng, world)
+  await seedNotifications(prisma, world)
+  console.log(`   🩺 ${records} medical records, 🎫 tickets, 📦 supplies, 🏛️ Hiring Hall, 🐦 ravens`)
+
+  console.log(`✨ Done in ${((Date.now() - t0) / 1000).toFixed(1)}s. Log in with any account below, password "${PASSWORD}":`)
+  for (const u of Object.values(world.users)) console.log(`   ${u.email.padEnd(28)} ${u.roles.join(' + ')}`)
 }
 
 main()
