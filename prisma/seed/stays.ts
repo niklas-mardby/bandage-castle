@@ -58,6 +58,10 @@ export function planStays(world: World, rng: Rng): PlannedStay[] {
   add({ monster: m.gloopert, customerId: c.vexilla.id, reason: 'BOARDING', status: 'BOOKED', start: 3, pickup: 17, checkout: null, rate: 8.15 })
   add({ monster: m.clucky, customerId: house, reason: 'SURRENDER', status: 'CHECKED_IN', start: -2, pickup: null, checkout: null, rate: 10, notes: 'Surrendered after the tax collector incident. Needs a lair!' })
   add({ monster: m.bramble, customerId: house, reason: 'TREATMENT', status: 'CHECKED_IN', start: -5, pickup: 9, checkout: null, rate: 10, notes: 'Lost flight feathers. Listed in the Hiring Hall from when she is better.' })
+  // arrivals for the intake desk: one today, one tomorrow
+  const arrivals = world.monsters.filter((x) => x.ownerId !== null && !x.key)
+  add({ monster: arrivals[3], customerId: arrivals[3].ownerId!, reason: 'TREATMENT', status: 'BOOKED', start: 0, pickup: 7, checkout: null, rate: 16.35, notes: 'Owner says "it was like that when I found it".' })
+  add({ monster: arrivals[8], customerId: arrivals[8].ownerId!, reason: 'BOARDING', status: 'BOOKED', start: 1, pickup: 15, checkout: null, rate: 12 })
   // last year's winter boarding: collected exactly on the agreed day
   add({ monster: m.snortlewick, customerId: c.morwenna.id, reason: 'BOARDING', status: 'CHECKED_OUT', start: -320, pickup: -306, checkout: -306, rate: 25, notes: 'Winter boarding.' })
   add({ monster: m.mumbles, customerId: c.grizelda.id, reason: 'BOARDING', status: 'CHECKED_OUT', start: -400, pickup: -390, checkout: -388, rate: 15 })
