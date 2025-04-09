@@ -46,6 +46,7 @@ export default function Layout() {
         )}
         {hasRole(user, 'OVERLORD', 'ADMIN', 'FRONT_DESK', 'KEEPER', 'VET') && <Link to="/hiring">Hiring Hall</Link>}
         {hasRole(user, 'VET', 'ADMIN') && <Link to="/vet">Vet</Link>}
+        {hasRole(user, 'THERAPIST', 'ADMIN') && <Link to="/therapy">Therapy</Link>}
         {hasRole(user, 'ADMIN') && <Link to="/admin/users">Users</Link>}
       </nav>
       <Outlet />
