@@ -38,6 +38,7 @@ const ACCOUNTS: { key: string; email: string; name: string; roles: string[] }[] 
   { key: 'keeper', email: 'keeper@bandage.castle', name: 'Old Hobb', roles: ['KEEPER'] },
   { key: 'keeper2', email: 'bryony@bandage.castle', name: 'Bryony Mudlark', roles: ['KEEPER'] },
   { key: 'vet', email: 'vet@bandage.castle', name: 'Dr. Ingrid Splintmoor', roles: ['VET'] },
+  { key: 'therapist', email: 'therapist@bandage.castle', name: 'Dr. Hilda Couchworth', roles: ['THERAPIST'] },
   { key: 'igor', email: 'igor@bandage.castle', name: 'Igor', roles: ['STAFF'] },
   { key: 'owner', email: 'owner@bandage.castle', name: 'Lady Morwenna Grimsby', roles: ['OWNER'] },
   { key: 'overlord', email: 'overlord@bandage.castle', name: 'Baron Aldric Vexmoor', roles: ['OVERLORD', 'OWNER'] },
@@ -253,7 +254,7 @@ export async function seedWorld(prisma: PrismaClient, rng: Rng): Promise<World> 
   const lairs = await seedLairs(prisma)
   return {
     users,
-    staffIds: ['admin', 'frontdesk', 'keeper', 'keeper2', 'vet', 'igor'].map((k) => users[k].id),
+    staffIds: ['admin', 'frontdesk', 'keeper', 'keeper2', 'vet', 'therapist', 'igor'].map((k) => users[k].id),
     customers,
     houseCustomerId,
     customerByKey: Object.fromEntries(customers.filter((c) => c.key).map((c) => [c.key as string, c])),

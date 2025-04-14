@@ -11,6 +11,7 @@ import { Rng } from './random'
 import { seedWorld, PASSWORD } from './world'
 import { seedBillingV2Backfill, seedResidents, seedStays } from './stays'
 import { seedHiring, seedMedical, seedNotifications, seedRavens, seedSupplies, seedTickets } from './operations'
+import { seedTherapy } from './therapy'
 
 const SEED = 20220214 // the day Gorm typed `git init`
 
@@ -35,12 +36,14 @@ async function main() {
   console.log(`   🛏️ ${stays.length} stays, 💰 invoices (${backfilled} copied to Billing v2)`)
 
   const records = await seedMedical(prisma, rng, world, stays)
+  const therapy = await seedTherapy(prisma, rng, world, stays)
   await seedTickets(prisma, rng, world)
   await seedSupplies(prisma, rng, world)
   await seedHiring(prisma, rng, world)
   await seedRavens(prisma, rng, world)
   await seedNotifications(prisma, world)
-  console.log(`   🩺 ${records} medical records, 🎫 tickets, 📦 supplies, 🏛️ Hiring Hall, 🐦 ravens`)
+  console.log(`   🩺 ${records} medical records, 🛋️ ${therapy.plans} therapy plans (${therapy.sessions} sessions)`)
+  console.log('   🎫 tickets, 📦 supplies, 🏛️ Hiring Hall, 🐦 ravens')
 
   console.log(`✨ Done in ${((Date.now() - t0) / 1000).toFixed(1)}s. Log in with any account below, password "${PASSWORD}":`)
   for (const u of Object.values(world.users)) console.log(`   ${u.email.padEnd(28)} ${u.roles.join(' + ')}`)
