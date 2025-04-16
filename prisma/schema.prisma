@@ -93,6 +93,7 @@ model Monster {
 
   lairAssignments LairAssignment[]
   medicalRecords  MedicalRecord[]
+  therapyPlans    TherapyPlan[]
   hiringListings  HiringListing[]
 
   @@index([ownerId])
@@ -646,4 +647,48 @@ model Notification {
   @@index([userId, readAt])
   @@index([customerId])
   @@map("notifications")
+}
+
+// ---------------------------------------------------------------------------
+// Therapy (2025)
+// ---------------------------------------------------------------------------
+
+model TherapyPlan {
+  id          Int       @id @default(autoincrement())
+  monsterId   Int       @map("monster_id")
+  therapistId Int       @map("therapist_id")
+  /// ADVENTURER_TRAUMA | FEAR_OF_TORCHES | HOARDING_ANXIETY | BRIDGE_TRAUMA | FEAR_OF_SWORDS | SEPARATION_ANXIETY | OTHER
+  issue       String    @db.VarChar(32)
+  goals       String    @db.Text
+  /// ACTIVE | PAUSED | COMPLETED
+  status      String    @default("ACTIVE") @db.VarChar(16)
+  startedAt   DateTime  @map("started_at") @db.Date
+  endedAt     DateTime? @map("ended_at") @db.Date
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+
+  monster  Monster          @relation(fields: [monsterId], references: [id])
+  sessions TherapySession[]
+
+  @@index([monsterId])
+  @@index([therapistId])
+  @@map("therapy_plans")
+}
+
+model TherapySession {
+  id           Int      @id @default(autoincrement())
+  planId       Int      @map("plan_id")
+  sessionDate  DateTime @map("session_date") @db.Date
+  durationMin  Int      @default(50) @map("duration_min")
+  /// 1 (terrible) .. 10 (wonderful)
+  moodBefore   Int      @map("mood_before")
+  moodAfter    Int      @map("mood_after")
+  notes        String   @db.Text
+  homework     String?  @db.VarChar(255)
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  plan TherapyPlan @relation(fields: [planId], references: [id], onDelete: Cascade)
+
+  @@index([planId])
+  @@map("therapy_sessions")
 }
