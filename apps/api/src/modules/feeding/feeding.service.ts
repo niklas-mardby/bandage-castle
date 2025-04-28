@@ -11,8 +11,9 @@ function parseDay(day: string | undefined): Date {
 export async function scheduleFor(day?: string) {
   const date = parseDay(day)
   const assignments = await prisma.lairAssignment.findMany({
-    // checked-out monsters keep their assignment until a keeper moves them out (legacy check-out doesn't know about lairs)
-    where: { releasedAt: null, monster: { status: 'IN_RESIDENCE' } },
+    // Checked-out monsters keep their assignment until a keeper moves them out (legacy check-out doesn't
+    // know about lairs). Monsters waiting in the Hiring Hall live here too and are AVAILABLE, not IN_RESIDENCE.
+    where: { releasedAt: null, monster: { status: { in: ['IN_RESIDENCE', 'AVAILABLE'] } } },
     include: {
       lair: true,
       monster: { include: { species: true } },
