@@ -1,12 +1,12 @@
 import { Link, Outlet, useNavigate } from 'react-router-dom'
-import { hasRole } from '@bandage/shared'
+import { hasRole, isStaff } from '@bandage/shared'
 import { useAuth } from '../auth/AuthProvider'
 import NotificationBell from './NotificationBell'
 
 export default function Layout() {
   const { user, logout } = useAuth()
   const navigate = useNavigate()
-  const staff = hasRole(user, 'ADMIN', 'FRONT_DESK', 'KEEPER', 'VET')
+  const staff = isStaff(user)
 
   const doLogout = async () => {
     await logout()
