@@ -19,6 +19,7 @@ import { flagsRouter } from './modules/flags/flags.routes'
 import { billingV2Router } from './modules/billing-v2/billing-v2.routes'
 import { notificationsRouter } from './modules/notifications/notifications.routes'
 import { therapyRouter } from './modules/therapy/therapy.routes'
+import { bulletinRouter } from './modules/bulletin/bulletin.routes'
 
 export function createApp() {
   const app = express()
@@ -45,6 +46,7 @@ export function createApp() {
   app.use('/api/v2/billing', billingV2Router)
   app.use('/api/notifications', notificationsRouter)
   app.use('/api/therapy', therapyRouter)
+  app.use('/api/bulletin', bulletinRouter)
   app.use('/api/stays', stayExtensionsRouter, staysRouter) // the rest of /api/stays is in legacy
 
   // pre-2023 routes
