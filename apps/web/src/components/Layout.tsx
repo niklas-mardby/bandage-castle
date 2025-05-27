@@ -23,6 +23,7 @@ export default function Layout() {
         )}
         <Link to="/">Home</Link>
         <Link to="/species">Species</Link>
+        {staff && <Link to="/bulletin">Bulletin</Link>}
         {staff && (
           <>
             <Link to="/monsters">Monsters</Link>

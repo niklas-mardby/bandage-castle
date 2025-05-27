@@ -378,3 +378,60 @@ blockquote {
 .mood-bar.after {
   background: #6aa36f;
 }
+.bulletin {
+  max-width: 820px;
+}
+.bulletin-item.draft {
+  border-style: dashed;
+}
+.post-body {
+  white-space: pre-wrap;
+  line-height: 1.6;
+}
+.markdown {
+  line-height: 1.6;
+}
+.markdown h1,
+.markdown h2,
+.markdown h3 {
+  margin-top: 1.2em;
+}
+.markdown code {
+  background: #efe6d4;
+  padding: 1px 4px;
+  border-radius: 3px;
+}
+.markdown blockquote {
+  border-left: 3px solid #d6c9b0;
+  margin-left: 0;
+  padding-left: 12px;
+}
+.markdown table {
+  border-collapse: collapse;
+}
+.markdown td,
+.markdown th {
+  border: 1px solid #d6c9b0;
+  padding: 4px 8px;
+}
+.tabs button {
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 6px 10px;
+  cursor: pointer;
+}
+.tabs button.active {
+  border-bottom-color: #3b2a1a;
+  font-weight: bold;
+}
+textarea.editor {
+  width: 100%;
+  font-family: monospace;
+}
+.preview {
+  background: white;
+  border: 1px solid #d6c9b0;
+  padding: 12px;
+  min-height: 200px;
+}
