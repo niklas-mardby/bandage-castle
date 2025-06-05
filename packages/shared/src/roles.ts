@@ -1,9 +1,10 @@
-export const ROLES = ['ADMIN', 'FRONT_DESK', 'KEEPER', 'VET', 'THERAPIST', 'OWNER', 'OVERLORD', 'STAFF'] as const
+export const ROLES = ['ADMIN', 'FRONT_DESK', 'KEEPER', 'VET', 'THERAPIST', 'SCRIBE', 'OWNER', 'OVERLORD', 'STAFF'] as const
 
 export type Role = (typeof ROLES)[number]
 
 /** Roles held by castle employees. */
-export const STAFF_ROLES: readonly Role[] = ['ADMIN', 'FRONT_DESK', 'KEEPER', 'VET', 'THERAPIST']
+// SCRIBE counts as staff: scribes work in the castle and need the staff menu + Bulletin
+export const STAFF_ROLES: readonly Role[] = ['ADMIN', 'FRONT_DESK', 'KEEPER', 'VET', 'THERAPIST', 'SCRIBE']
 
 /** Roles held by customers. A customer can be both. */
 export const CUSTOMER_ROLES: readonly Role[] = ['OWNER', 'OVERLORD']

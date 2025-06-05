@@ -692,3 +692,42 @@ model TherapySession {
   @@index([planId])
   @@map("therapy_sessions")
 }
+
+// ---------------------------------------------------------------------------
+// Bulletin (2025): internal pages and posts
+// ---------------------------------------------------------------------------
+
+model BulletinPage {
+  id          Int       @id @default(autoincrement())
+  slug        String    @unique @db.VarChar(191)
+  title       String    @db.VarChar(191)
+  bodyMd      String    @map("body_md") @db.Text
+  /// PAGE (evergreen, e.g. "Fire safety") | POST (news)
+  kind        String    @default("POST") @db.VarChar(8)
+  /// DRAFT | PUBLISHED
+  status      String    @default("DRAFT") @db.VarChar(16)
+  pinned      Boolean   @default(false)
+  authorId    Int       @map("author_id")
+  publishedAt DateTime? @map("published_at")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+
+  revisions BulletinRevision[]
+
+  @@index([kind, status])
+  @@map("bulletin_pages")
+}
+
+model BulletinRevision {
+  id         Int      @id @default(autoincrement())
+  pageId     Int      @map("page_id")
+  title      String   @db.VarChar(191)
+  bodyMd     String   @map("body_md") @db.Text
+  editedById Int      @map("edited_by_id")
+  editedAt   DateTime @default(now()) @map("edited_at")
+
+  page BulletinPage @relation(fields: [pageId], references: [id], onDelete: Cascade)
+
+  @@index([pageId])
+  @@map("bulletin_revisions")
+}
