@@ -50,7 +50,8 @@ export async function admin() {
     lowStock(),
   ])
 
-  // revenue per month for the last 12 months (legacy invoices; v2 isn't switched on yet)
+  // revenue per month for the last 12 months
+  // TODO(sam): legacy invoices only. Switch to invoices_v2 when ENABLE_BILLING_V2 goes live. Clean up after launch
   const since = addDays(startOfToday(), -365)
   const invoices = await prisma.invoice.findMany({ where: { issuedAt: { gte: since }, status: { not: 'VOID' } }, select: { issuedAt: true, total: true } })
   const byMonth = new Map<string, number>()
