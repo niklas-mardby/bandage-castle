@@ -23,3 +23,9 @@ export function useCreateInvoiceFromStay() {
     onSuccess: () => qc.invalidateQueries({ queryKey: queryKeys.invoicesV2 }),
   })
 }
+
+// --- dashboards (2025) ---
+
+export function useDashboard<T>(section: string) {
+  return useQuery({ queryKey: ['dashboard', section], queryFn: () => apiFetch(`/dashboard/${section}`) as Promise<T> })
+}

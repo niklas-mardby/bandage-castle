@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { hasRole } from '@bandage/shared'
+
 import { useAuth } from '../auth/AuthProvider'
 
 export default function LoginPage() {
@@ -15,10 +15,10 @@ export default function LoginPage() {
     e.preventDefault()
     setError(null)
     try {
-      const user = await login(email, password)
+      await login(email, password)
       const from = (location.state as { from?: string } | null)?.from
-      const isCustomerOnly = !hasRole(user, 'ADMIN', 'FRONT_DESK', 'KEEPER', 'VET') && hasRole(user, 'OWNER')
-      navigate(from || (isCustomerOnly ? '/my/monsters' : '/'), { replace: true })
+      // everyone lands on their dashboard now
+      navigate(from || '/', { replace: true })
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Login failed')
     }
