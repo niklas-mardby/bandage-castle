@@ -731,3 +731,26 @@ model BulletinRevision {
   @@index([pageId])
   @@map("bulletin_revisions")
 }
+
+// ---------------------------------------------------------------------------
+// Audit log (2025): who changed what
+// ---------------------------------------------------------------------------
+
+model AuditLog {
+  id        Int      @id @default(autoincrement())
+  /// null for system changes
+  actorId   Int?     @map("actor_id")
+  /// "ticket", "user", "lair", ...
+  entity    String   @db.VarChar(32)
+  entityId  String   @map("entity_id") @db.VarChar(64)
+  /// CREATE | UPDATE | DELETE | ASSIGN | RELEASE | PUBLISH | ...
+  action    String   @db.VarChar(32)
+  before    Json?
+  after     Json?
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([entity, entityId])
+  @@index([actorId])
+  @@index([createdAt])
+  @@map("audit_log")
+}
