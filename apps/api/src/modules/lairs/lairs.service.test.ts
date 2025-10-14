@@ -6,6 +6,7 @@ vi.mock('../../db/prisma', () => ({
     monster: { findUnique: vi.fn() },
     lairAssignment: { findMany: vi.fn(), count: vi.fn(), updateMany: vi.fn(), create: vi.fn() },
     speciesCompatibility: { findMany: vi.fn() },
+    auditLog: { create: vi.fn() },
     $transaction: vi.fn(),
   },
 }))

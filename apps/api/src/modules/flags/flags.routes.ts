@@ -4,6 +4,7 @@ import { asyncHandler } from '../../middleware/asyncHandler'
 import { requireRole, requireUser } from '../../middleware/requireRole'
 import { validate } from '../../middleware/validate'
 import * as flagsService from './flags.service'
+import * as audit from '../audit/audit.service'
 
 export const flagsRouter = Router()
 
@@ -29,6 +30,8 @@ flagsRouter.put(
   requireRole('ADMIN'),
   validate(z.object({ enabled: z.boolean() })),
   asyncHandler(async (req, res) => {
-    res.json(await flagsService.setFlag(req.params.key, req.body.enabled))
+    const flag = await flagsService.setFlag(req.params.key, req.body.enabled)
+    await audit.record({ actorId: req.user!.id, entity: 'flag', entityId: flag.key, action: 'UPDATE', before: { enabled: !flag.enabled }, after: { enabled: flag.enabled } })
+    res.json(flag)
   }),
 )

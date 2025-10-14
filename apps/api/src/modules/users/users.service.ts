@@ -3,6 +3,7 @@ import type { Role } from '@bandage/shared'
 import { prisma } from '../../db/prisma'
 import { BadRequestError, ConflictError, NotFoundError } from '../../errors/httpErrors'
 import type { CreateUserInput, UpdateUserInput } from './users.schema'
+import * as audit from '../audit/audit.service'
 
 export type UserDto = {
   id: number
@@ -57,7 +58,7 @@ export async function createUser(input: CreateUserInput): Promise<UserDto> {
 }
 
 export async function updateUser(id: number, input: UpdateUserInput, actingUserId: number): Promise<UserDto> {
-  await getUser(id)
+  const before = await getUser(id)
   if (id === actingUserId && input.roles && !input.roles.includes('ADMIN')) {
     throw new BadRequestError("You can't remove your own ADMIN role. Ask another admin.")
   }
@@ -72,5 +73,7 @@ export async function updateUser(id: number, input: UpdateUserInput, actingUserI
       include,
     })
   })
-  return toDto(user)
+  const after = toDto(user)
+  await audit.record({ actorId: actingUserId, entity: 'user', entityId: id, action: 'UPDATE', ...audit.diff(before, after) })
+  return after
 }

@@ -2,6 +2,7 @@ import type { Prisma } from '@prisma/client'
 import { prisma } from '../../db/prisma'
 import { NotFoundError } from '../../errors/httpErrors'
 import type { CreateTicketInput, ListQuery, UpdateTicketInput } from './tickets.schema'
+import * as audit from '../audit/audit.service'
 
 const userSelect = { select: { id: true, displayName: true, email: true } } as const
 
@@ -46,24 +47,29 @@ export async function getTicket(id: number) {
 }
 
 export async function createTicket(input: CreateTicketInput, reporterId: number) {
-  return prisma.ticket.create({
+  const ticket = await prisma.ticket.create({
     data: {
       ...input,
       dueDate: input.dueDate ? new Date(input.dueDate) : null,
       reporterId,
     },
   })
+  await audit.record({ actorId: reporterId, entity: 'ticket', entityId: ticket.id, action: 'CREATE', after: ticket })
+  return ticket
 }
 
-export async function updateTicket(id: number, input: UpdateTicketInput) {
-  await getTicket(id)
-  return prisma.ticket.update({
+export async function updateTicket(id: number, input: UpdateTicketInput, actorId?: number) {
+  const before = await prisma.ticket.findUnique({ where: { id } })
+  if (!before) throw new NotFoundError('Ticket')
+  const after = await prisma.ticket.update({
     where: { id },
     data: {
       ...input,
       dueDate: input.dueDate === undefined ? undefined : input.dueDate ? new Date(input.dueDate) : null,
     },
   })
+  await audit.record({ actorId, entity: 'ticket', entityId: id, action: 'UPDATE', ...audit.diff(before, after) })
+  return after
 }
 
 export async function setStatus(id: number, status: string) {

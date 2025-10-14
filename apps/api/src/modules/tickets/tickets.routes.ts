@@ -43,7 +43,7 @@ ticketsRouter.patch(
   '/:id',
   validate(updateTicketSchema),
   asyncHandler(async (req, res) => {
-    res.json(await ticketsService.updateTicket(Number(req.params.id), req.body))
+    res.json(await ticketsService.updateTicket(Number(req.params.id), req.body, req.user!.id))
   }),
 )
 

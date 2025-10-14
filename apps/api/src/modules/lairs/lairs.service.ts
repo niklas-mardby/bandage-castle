@@ -2,6 +2,7 @@ import { prisma } from '../../db/prisma'
 import { BadRequestError, ConflictError, NotFoundError } from '../../errors/httpErrors'
 import { habitatWarnings, type HabitatWarning } from './habitat'
 import type { AssignInput, LairInput } from './lairs.schema'
+import * as audit from '../audit/audit.service'
 
 const residentInclude = {
   where: { releasedAt: null },
@@ -107,6 +108,13 @@ export async function assignMonster(lairId: number, input: AssignInput, assigned
     prisma.lairAssignment.create({ data: { lairId, monsterId: monster.id, assignedById } }),
   ])
 
+  await audit.record({
+    actorId: assignedById,
+    entity: 'lair',
+    entityId: lairId,
+    action: 'ASSIGN',
+    after: { monsterId: monster.id, monster: monster.name, assignmentId: assignment.id, habitatWarnings: warnings.length },
+  })
   return { assignmentId: assignment.id, warnings }
 }
 
