@@ -514,3 +514,15 @@ textarea.editor {
   text-decoration: none;
   width: 170px;
 }
+.changes {
+  margin: 0;
+  padding-left: 16px;
+  font-size: 13px;
+}
+.changes .old {
+  color: #9b3d2e;
+  text-decoration: line-through;
+}
+.changes .new {
+  color: #2e6b35;
+}

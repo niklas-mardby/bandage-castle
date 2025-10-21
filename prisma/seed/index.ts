@@ -13,6 +13,7 @@ import { seedBillingV2Backfill, seedResidents, seedStays } from './stays'
 import { seedHiring, seedMedical, seedNotifications, seedRavens, seedSupplies, seedTickets } from './operations'
 import { seedTherapy } from './therapy'
 import { seedBulletin } from './bulletin'
+import { seedAudit } from './audit'
 
 const SEED = 20220214 // the day Gorm typed `git init`
 
@@ -44,6 +45,7 @@ async function main() {
   await seedRavens(prisma, rng, world)
   await seedNotifications(prisma, world)
   const bulletin = await seedBulletin(prisma, world)
+  await seedAudit(prisma, rng, world)
   console.log(`   🩺 ${records} medical records, 🛋️ ${therapy.plans} therapy plans (${therapy.sessions} sessions)`)
   console.log(`   🎫 tickets, 📦 supplies, 🏛️ Hiring Hall, 🐦 ravens, 📜 ${bulletin} Bulletin entries`)
 

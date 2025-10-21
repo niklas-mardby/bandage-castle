@@ -27,6 +27,7 @@ import ReportsPage from './pages/ReportsPage'
 import MyMonstersPage from './pages/MyMonstersPage'
 import MyInvoicesPage from './pages/MyInvoicesPage'
 import UsersPage from './pages/admin/UsersPage'
+import AuditLogPage from './pages/admin/AuditLogPage'
 import SpeciesListPage from './pages/species/SpeciesListPage'
 import SpeciesDetailPage from './pages/species/SpeciesDetailPage'
 import LairListPage from './pages/lairs/LairListPage'
@@ -104,6 +105,14 @@ export default function App() {
           element={
             <RequireAuth roles={['ADMIN']}>
               <UsersPage />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/admin/audit"
+          element={
+            <RequireAuth roles={['ADMIN']}>
+              <AuditLogPage />
             </RequireAuth>
           }
         />
