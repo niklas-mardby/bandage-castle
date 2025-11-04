@@ -754,3 +754,13 @@ model AuditLog {
   @@index([createdAt])
   @@map("audit_log")
 }
+
+/// Castle-wide settings edited by admins (opening hours, prices...). value is JSON.
+model Setting {
+  key       String   @id @db.VarChar(64)
+  value     Json
+  updatedAt DateTime @updatedAt @map("updated_at")
+  updatedBy Int?     @map("updated_by")
+
+  @@map("settings")
+}
