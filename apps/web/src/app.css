@@ -526,3 +526,12 @@ textarea.editor {
 .changes .new {
   color: #2e6b35;
 }
+.settings fieldset {
+  border: 1px solid #d6c9b0;
+  border-radius: 6px;
+  margin-bottom: 16px;
+  background: white;
+}
+.flag-row {
+  margin: 6px 0;
+}
