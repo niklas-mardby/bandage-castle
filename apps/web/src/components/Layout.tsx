@@ -35,7 +35,8 @@ export default function Layout() {
             <Link to="/feeding">Feeding</Link>
             <Link to="/supplies">Supplies</Link>
             <Link to="/invoices">Invoices</Link>
-            {hasRole(user, 'ADMIN', 'FRONT_DESK') && <Link to="/billing/v2">Invoices v2</Link>}
+            {/* TODO(sam): clean up after launch. Hidden for the demo, the v2 page confuses people while the flag is off */}
+            {false && hasRole(user, 'ADMIN', 'FRONT_DESK') && <Link to="/billing/v2">Invoices v2</Link>}
             <Link to="/reports">Reports</Link>
           </>
         )}
