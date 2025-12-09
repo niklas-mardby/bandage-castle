@@ -102,7 +102,8 @@ router.post(
 ## ⚛️ Front end
 
 - ✅ Function components and hooks. No new class components.
-- ✅ Data fetching with the `useApi` hook. Don't call `fetch` directly.
+- ✅ Data fetching with **React Query**. Put query hooks in `hooks/queries.ts`; include everything the data depends on in the query key.
+- 🚫 `useApi` and `apiFetch` in `useEffect` are legacy. Don't add new uses.
 - ✅ Every page lives in `pages/<module>/` and is registered in `App.tsx`.
 
 ---
