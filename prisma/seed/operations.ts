@@ -309,3 +309,15 @@ export async function seedNotifications(prisma: PrismaClient, world: World) {
   await n(world.users.keeper.id, 'Clucky needs a lair', 'Surrendered cockatrice has no lair yet.', '/lairs', 2)
   await n(world.users.admin.id, 'Welcome to the new notification bell', 'Staff notifications now appear here. 🔔', null, 200, true)
 }
+
+export async function seedFeedingOverrides(prisma: PrismaClient, world: World) {
+  const ember = world.lairs.find((l) => l.name === 'The Ember Vault')!
+  const moat = world.lairs.find((l) => l.name === 'The Moat (South)')!
+  const hydra = world.species.get('Hydra')!
+  await prisma.lairFeedingOverride.create({
+    data: { lairId: ember.id, speciesId: world.species.get('Dragon')!.id, mealsPerDay: 3, portionKg: 50, note: 'Winter: dragons get a third meal (vet\'s orders)', createdById: world.users.keeper.id },
+  })
+  await prisma.lairFeedingOverride.create({
+    data: { lairId: moat.id, speciesId: hydra.id, mealsPerDay: 5, portionKg: 3, note: 'One small meal per head, otherwise they fight', createdById: world.users.vet.id },
+  })
+}

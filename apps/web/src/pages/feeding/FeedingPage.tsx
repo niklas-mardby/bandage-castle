@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { apiFetch } from '../../api'
 import { useApi } from '../../hooks/useApi'
+import FeedingOverrides from './FeedingOverrides'
 
 type Entry = {
   time: string
@@ -13,6 +14,7 @@ type Entry = {
   species: string
   food: string
   portionKg: number
+  overrideNote?: string
   fed: boolean
 }
 
@@ -76,6 +78,11 @@ export default function FeedingPage() {
                         </td>
                         <td>
                           <b>{e.monsterName}</b> <span className="muted">{e.species}</span>
+                          {e.overrideNote && (
+                            <span className="badge" title={e.overrideNote}>
+                              ⚙️ override
+                            </span>
+                          )}
                         </td>
                         <td>{e.lairName}</td>
                         <td>
@@ -99,6 +106,7 @@ export default function FeedingPage() {
           </ul>
         </div>
       </div>
+      <FeedingOverrides />
     </div>
   )
 }

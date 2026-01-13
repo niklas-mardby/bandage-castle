@@ -1,9 +1,18 @@
 // Pure functions that turn "who lives where" + species data into a feeding plan.
 
+/** Lair-specific feeding rule (2026). Any field left null falls back to the species. */
+export type FeedingOverride = {
+  mealsPerDay: number | null
+  portionKg: number | null
+  food: string | null
+  note: string | null
+}
+
 export type FeedingInput = {
   lair: { id: number; name: string; wing: string }
   monster: { id: number; name: string }
   species: { name: string; diet: string; mealsPerDay: number; portionKg: number }
+  override?: FeedingOverride
 }
 
 export type FeedingEntry = {
@@ -16,6 +25,8 @@ export type FeedingEntry = {
   species: string
   food: string
   portionKg: number
+  /** shown as a ⚙️ badge so keepers know this lair has special rules */
+  overrideNote?: string
 }
 
 const FIRST_MEAL = 7 // 07:00
@@ -36,7 +47,7 @@ export function mealTimes(mealsPerDay: number): string[] {
 
 export function buildSchedule(inputs: FeedingInput[]): FeedingEntry[] {
   const entries: FeedingEntry[] = []
-  for (const { lair, monster, species } of inputs) {
+  for (const { lair, monster, species, override } of inputs) {
     for (const time of mealTimes(species.mealsPerDay)) {
       entries.push({
         time,
@@ -48,6 +59,7 @@ export function buildSchedule(inputs: FeedingInput[]): FeedingEntry[] {
         species: species.name,
         food: species.diet,
         portionKg: species.portionKg,
+        overrideNote: override ? (override.note ?? 'lair override') : undefined,
       })
     }
   }

@@ -10,7 +10,7 @@ import { PrismaClient } from '@prisma/client'
 import { Rng } from './random'
 import { seedWorld, PASSWORD } from './world'
 import { seedBillingV2Backfill, seedResidents, seedStays } from './stays'
-import { seedHiring, seedMedical, seedNotifications, seedRavens, seedSupplies, seedTickets } from './operations'
+import { seedFeedingOverrides, seedHiring, seedMedical, seedNotifications, seedRavens, seedSupplies, seedTickets } from './operations'
 import { seedTherapy } from './therapy'
 import { seedBulletin } from './bulletin'
 import { seedAudit } from './audit'
@@ -34,6 +34,7 @@ async function main() {
 
   const stays = await seedStays(prisma, rng, world)
   await seedResidents(prisma, rng, world, stays)
+  await seedFeedingOverrides(prisma, world)
   const backfilled = await seedBillingV2Backfill(prisma)
   console.log(`   🛏️ ${stays.length} stays, 💰 invoices (${backfilled} copied to Billing v2)`)
 

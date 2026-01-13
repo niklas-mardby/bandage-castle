@@ -279,7 +279,8 @@ model Lair {
   createdAt    DateTime @default(now()) @map("created_at")
   updatedAt    DateTime @updatedAt @map("updated_at")
 
-  assignments LairAssignment[]
+  assignments      LairAssignment[]
+  feedingOverrides LairFeedingOverride[]
 
   @@map("lairs")
 }
@@ -763,4 +764,24 @@ model Setting {
   updatedBy Int?     @map("updated_by")
 
   @@map("settings")
+}
+
+/// Lair-specific feeding rules that win over the species defaults
+/// (e.g. "Ember Vault dragons get a third meal in winter").
+model LairFeedingOverride {
+  id          Int      @id @default(autoincrement())
+  lairId      Int      @map("lair_id")
+  /// null = every species in the lair
+  speciesId   Int?     @map("species_id")
+  mealsPerDay Int?     @map("meals_per_day")
+  portionKg   Decimal? @map("portion_kg") @db.Decimal(6, 2)
+  food        String?  @db.VarChar(255)
+  note        String?  @db.VarChar(255)
+  createdById Int      @map("created_by_id")
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  lair Lair @relation(fields: [lairId], references: [id], onDelete: Cascade)
+
+  @@index([lairId])
+  @@map("lair_feeding_overrides")
 }

@@ -1,11 +1,37 @@
 import { prisma } from '../../db/prisma'
 import { BadRequestError } from '../../errors/httpErrors'
-import { buildSchedule, shoppingList, type FeedingInput } from './schedule'
+import { buildSchedule, shoppingList, type FeedingInput, type FeedingOverride } from './schedule'
 
 function parseDay(day: string | undefined): Date {
   const value = day ?? new Date().toISOString().slice(0, 10)
   if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) throw new BadRequestError('date must be YYYY-MM-DD')
   return new Date(value)
+}
+
+type OverrideRow = { lairId: number; speciesId: number | null; mealsPerDay: number | null; portionKg: unknown; food: string | null; note: string | null }
+
+/** Species-specific override for the lair wins over a lair-wide one. */
+export function overrideFor(overrides: OverrideRow[], lairId: number, speciesId: number): FeedingOverride | undefined {
+  const match = overrides.find((o) => o.lairId === lairId && o.speciesId === speciesId) ?? overrides.find((o) => o.lairId === lairId && o.speciesId === null)
+  if (!match) return undefined
+  return {
+    mealsPerDay: match.mealsPerDay,
+    portionKg: match.portionKg === null ? null : Number(match.portionKg),
+    food: match.food,
+    note: match.note,
+  }
+}
+
+export async function listOverrides() {
+  return prisma.lairFeedingOverride.findMany({ include: { lair: { select: { id: true, name: true } } }, orderBy: { lairId: 'asc' } })
+}
+
+export async function createOverride(input: { lairId: number; speciesId?: number | null; mealsPerDay?: number | null; portionKg?: number | null; food?: string | null; note?: string | null }, userId: number) {
+  return prisma.lairFeedingOverride.create({ data: { ...input, createdById: userId } })
+}
+
+export async function deleteOverride(id: number) {
+  await prisma.lairFeedingOverride.delete({ where: { id } })
 }
 
 export async function scheduleFor(day?: string) {
@@ -20,6 +46,8 @@ export async function scheduleFor(day?: string) {
     },
   })
 
+  const overrides = await prisma.lairFeedingOverride.findMany()
+
   const inputs: FeedingInput[] = assignments
     .filter((a) => a.monster.species)
     .map((a) => ({
@@ -31,6 +59,7 @@ export async function scheduleFor(day?: string) {
         mealsPerDay: a.monster.species!.mealsPerDay,
         portionKg: Number(a.monster.species!.portionKg),
       },
+      override: overrideFor(overrides, a.lair.id, a.monster.species!.id),
     }))
 
   const entries = buildSchedule(inputs)
