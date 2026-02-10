@@ -535,3 +535,22 @@ textarea.editor {
 .flag-row {
   margin: 6px 0;
 }
+.nav-group {
+  margin-right: 14px;
+  padding-right: 10px;
+  border-right: 1px solid #6b5137;
+}
+.nav-group:last-of-type {
+  border-right: none;
+}
+.nav a.active {
+  text-decoration: underline;
+  font-weight: bold;
+}
+.not-found {
+  text-align: center;
+  margin-top: 60px;
+}
+.not-found h1 {
+  font-size: 64px;
+}
