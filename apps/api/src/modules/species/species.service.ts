@@ -38,25 +38,9 @@ async function toDto(s: Species): Promise<SpeciesDto> {
   }
 }
 
-/**
- * The whole compendium in three queries instead of 1 + 2N + rules.
- * (toDto() is still used for single species, where it doesn't matter.)
- */
 export async function listSpecies(): Promise<SpeciesDto[]> {
-  const [species, counts, rules] = await Promise.all([
-    prisma.species.findMany({ orderBy: { name: 'asc' } }),
-    prisma.monster.groupBy({ by: ['speciesId'], where: { status: 'IN_RESIDENCE' }, _count: { _all: true } }),
-    prisma.speciesCompatibility.findMany({ include: { incompatibleSpecies: { select: { id: true, name: true } } } }),
-  ])
-  const countBySpecies = new Map(counts.map((c) => [c.speciesId, c._count._all]))
-  return species.map((s) => ({
-    ...s,
-    portionKg: Number(s.portionKg),
-    residentCount: countBySpecies.get(s.id) ?? 0,
-    incompatibleWith: rules
-      .filter((r) => r.speciesId === s.id)
-      .map((r) => ({ id: r.id, speciesId: r.incompatibleSpecies.id, speciesName: r.incompatibleSpecies.name, reason: r.reason })),
-  }))
+  const species = await prisma.species.findMany({ orderBy: { name: 'asc' } })
+  return Promise.all(species.map(toDto))
 }
 
 export async function getSpecies(slugOrId: string) {
