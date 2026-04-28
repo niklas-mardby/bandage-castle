@@ -554,3 +554,210 @@ textarea.editor {
 .not-found h1 {
   font-size: 64px;
 }
+
+/* ---- UI kit (2026) ---------------------------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 5px;
+  border: 1px solid #b8a68a;
+  padding: 5px 12px;
+  cursor: pointer;
+  background: #fffaf0;
+  font: inherit;
+}
+.btn-primary {
+  background: #3b2a1a;
+  color: #f4efe6;
+  border-color: #3b2a1a;
+}
+.btn-danger {
+  background: #a33a2c;
+  color: white;
+  border-color: #a33a2c;
+}
+.btn-link {
+  background: none;
+  border: none;
+  color: #8a2b0e;
+  text-decoration: underline;
+  padding: 0;
+}
+.btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+.btn-spinner {
+  width: 10px;
+  height: 10px;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.ui-card {
+  background: white;
+  border: 1px solid #d6c9b0;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+.ui-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 14px;
+  border-bottom: 1px solid #eee3cf;
+}
+.ui-card-header h3 {
+  margin: 0;
+}
+.ui-card-body {
+  padding: 12px 14px;
+}
+.ui-badge {
+  display: inline-block;
+  padding: 1px 8px;
+  border-radius: 10px;
+  font-size: 12px;
+  background: #e8dcc6;
+}
+.ui-badge-ok {
+  background: #cfe8c8;
+}
+.ui-badge-warn {
+  background: #f7e0a8;
+}
+.ui-badge-danger {
+  background: #f2b8b0;
+}
+.ui-badge-info {
+  background: #cfdff2;
+}
+.ui-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(30, 20, 10, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+}
+.ui-modal {
+  background: #fbf7ef;
+  border-radius: 8px;
+  min-width: 360px;
+  max-width: 640px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+.ui-modal-header,
+.ui-modal-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 16px;
+}
+.ui-modal-footer {
+  justify-content: flex-end;
+  gap: 8px;
+}
+.ui-modal-body {
+  padding: 0 16px 12px;
+}
+.ui-modal-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.ui-tabs {
+  display: flex;
+  gap: 4px;
+  border-bottom: 1px solid #d6c9b0;
+  margin: 12px 0;
+}
+.ui-tabs button {
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  padding: 6px 12px;
+  cursor: pointer;
+  font: inherit;
+}
+.ui-tabs button.active {
+  border-bottom-color: #3b2a1a;
+  font-weight: bold;
+}
+.ui-tab-count {
+  margin-left: 6px;
+  background: #e8dcc6;
+  border-radius: 8px;
+  padding: 0 6px;
+  font-size: 11px;
+}
+.ui-spinner {
+  color: #7a6a58;
+  padding: 16px 0;
+}
+.ui-spinner-icon {
+  display: inline-block;
+  margin-right: 6px;
+  animation: flicker 1.2s infinite alternate;
+}
+@keyframes flicker {
+  from {
+    opacity: 0.4;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.ui-empty {
+  text-align: center;
+  padding: 30px 0;
+}
+.ui-empty-icon {
+  font-size: 36px;
+}
+.ui-error {
+  background: #fdecea;
+  border: 1px solid #f2b8b0;
+  padding: 8px 12px;
+  border-radius: 6px;
+  margin: 8px 0;
+}
+.ui-field {
+  margin-bottom: 10px;
+}
+.ui-field label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 2px;
+}
+.ui-field input,
+.ui-field select,
+.ui-field textarea {
+  width: 100%;
+  max-width: 420px;
+}
+.ui-field.has-error input,
+.ui-field.has-error select,
+.ui-field.has-error textarea {
+  border-color: #a33a2c;
+}
+.ui-field-error {
+  color: #a33a2c;
+  font-size: 13px;
+}
+.ui-hint {
+  color: #7a6a58;
+  font-size: 13px;
+}
+.ui-table th.sortable {
+  cursor: pointer;
+  user-select: none;
+}
