@@ -24,7 +24,7 @@ The legacy modules build SQL strings by hand with `mysql2`, mixing callbacks and
 ## Migration tracker
 
 - [ ] Auth
-- [ ] Customers
+- [x] Customers (2026-05, Priya)
 - [ ] Monsters
 - [ ] Stays
 - [ ] Billing

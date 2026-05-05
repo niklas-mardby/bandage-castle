@@ -5,6 +5,7 @@ import { authenticate } from './middleware/requireRole'
 import { errorHandler } from './middleware/errorHandler'
 import { authRouter } from './modules/auth/auth.routes'
 import { usersRouter } from './modules/users/users.routes'
+import { customersRouter } from './modules/customers/customers.routes'
 import { speciesRouter } from './modules/species/species.routes'
 import { lairsRouter } from './modules/lairs/lairs.routes'
 import { intakeRouter } from './modules/intake/intake.routes'
@@ -37,6 +38,7 @@ export function createApp() {
   // modules
   app.use('/api/auth', authRouter)
   app.use('/api/users', usersRouter)
+  app.use('/api/customers', customersRouter) // replaces legacy/customers (ADR-004)
   app.use('/api/species', speciesRouter)
   app.use('/api/lairs', lairsRouter)
   app.use('/api/intake', intakeRouter)

@@ -56,7 +56,7 @@ class MonsterForm extends React.Component<Props, State> {
             <option value="">(none - castle resident)</option>
             {this.state.customers.map((c) => (
               <option key={c.id} value={c.id}>
-                {c.title} {c.first_name} {c.last_name}
+                {c.title} {c.firstName} {c.lastName}
               </option>
             ))}
           </select>

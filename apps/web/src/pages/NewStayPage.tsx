@@ -50,7 +50,7 @@ export default class NewStayPage extends React.Component<any, State> {
             <option value="">--</option>
             {this.state.customers.map((c) => (
               <option key={c.id} value={c.id}>
-                {c.first_name} {c.last_name}
+                {c.title} {c.firstName} {c.lastName}
               </option>
             ))}
           </select>

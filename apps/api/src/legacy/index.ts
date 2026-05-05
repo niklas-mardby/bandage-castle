@@ -13,7 +13,7 @@ import tournamentRoutes from './tournament/tournament.routes'
 export const legacyRouter = Router()
 
 legacyRouter.use('/monsters', monsterRoutes)
-legacyRouter.use('/customers', customerRoutes)
+legacyRouter.use('/customers', customerRoutes) // shadowed by modules/customers since 2026-05. TODO: delete legacy/customers
 legacyRouter.use('/stays', stayRoutes)
 legacyRouter.use('/billing', billingRoutes)
 legacyRouter.use('/ravens', ravenRoutes)
