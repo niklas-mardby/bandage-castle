@@ -761,3 +761,6 @@ textarea.editor {
   cursor: pointer;
   user-select: none;
 }
+.csv-link {
+  font-size: 13px;
+}

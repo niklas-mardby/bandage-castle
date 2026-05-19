@@ -24,7 +24,8 @@ import BulletinPostView from './pages/bulletin/BulletinPostView'
 import BulletinEditorPage from './pages/bulletin/BulletinEditorPage'
 import DashboardPage from './pages/dashboard/DashboardPage'
 import NotFoundPage from './pages/NotFoundPage'
-import ReportsPage from './pages/ReportsPage'
+import ClassicReportsPage from './pages/ReportsPage'
+import ReportsPage from './pages/reports/ReportsPage'
 import MyMonstersPage from './pages/MyMonstersPage'
 import MyInvoicesPage from './pages/MyInvoicesPage'
 import UsersPage from './pages/admin/UsersPage'
@@ -83,6 +84,7 @@ export default function App() {
         <Route path="/bulletin/new" element={<BulletinEditorPage />} />
         <Route path="/bulletin/edit/:id" element={<BulletinEditorPage />} />
         <Route path="/reports" element={<ReportsPage />} />
+        <Route path="/reports/classic" element={<ClassicReportsPage />} />
         <Route path="/species" element={<SpeciesListPage />} />
         <Route path="/species/:slug" element={<SpeciesDetailPage />} />
         <Route path="/lairs" element={<LairListPage />} />
