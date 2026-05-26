@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
+import { isStaff } from '@bandage/shared'
+import { useAuth } from '../auth/AuthProvider'
 import { apiFetch } from '../api'
 
 export default function MonsterDetailPage() {
@@ -7,6 +9,7 @@ export default function MonsterDetailPage() {
   const [monster, setMonster] = useState<any>(null)
   const [stays, setStays] = useState<any[]>([])
   const [error, setError] = useState('')
+  const { user } = useAuth()
 
   useEffect(() => {
     apiFetch('/monsters/' + id)
@@ -29,7 +32,12 @@ export default function MonsterDetailPage() {
           </p>
           <p>Status: {monster.status}</p>
           <p>Temperament: {monster.temperament}</p>
-          <Link to={'/monsters/' + monster.id + '/edit'}>edit</Link> | <Link to={'/monsters/' + monster.id + '/medical'}>medical history</Link>
+          {isStaff(user) && (
+            <>
+              <Link to={'/monsters/' + monster.id + '/edit'}>edit</Link> | <Link to={'/monsters/' + monster.id + '/medical'}>medical history</Link> |{' '}
+              <Link to={'/monsters/' + monster.id + '/profile'}>full profile ✨</Link>
+            </>
+          )}
         </div>
       </div>
       <h3>Quirks</h3>
