@@ -764,3 +764,9 @@ textarea.editor {
 .csv-link {
   font-size: 13px;
 }
+.account .ui-card {
+  max-width: 520px;
+}
+.nav-user a {
+  color: #f4efe6;
+}

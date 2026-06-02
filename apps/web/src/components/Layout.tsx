@@ -1,4 +1,4 @@
-import { NavLink, Outlet, useNavigate } from 'react-router-dom'
+import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom'
 import { hasRole } from '@bandage/shared'
 import { useAuth } from '../auth/AuthProvider'
 import { NAV } from '../nav/navConfig'
@@ -21,7 +21,7 @@ export default function Layout() {
       <nav className="nav">
         {user && (
           <span className="nav-user">
-            <NotificationBell /> {user.name || user.email} <button onClick={doLogout}>log out</button>
+            <NotificationBell /> <Link to="/account">{user.name || user.email}</Link> <button onClick={doLogout}>log out</button>
           </span>
         )}
         {groups.map((g) => {

@@ -15,6 +15,18 @@ export async function verifyCredentials(email: string, password: string): Promis
   return user.id
 }
 
+export async function changePassword(userId: number, currentPassword: string, newPassword: string): Promise<void> {
+  const user = await prisma.user.findUnique({ where: { id: userId } })
+  if (!user) throw new UnauthorizedError()
+  if (!(await bcrypt.compare(currentPassword, user.passwordHash))) throw new BadRequestError('Your current password is wrong')
+  if (currentPassword === newPassword) throw new BadRequestError('The new password must be different')
+  await prisma.user.update({ where: { id: userId }, data: { passwordHash: await bcrypt.hash(newPassword, 10) } })
+}
+
+export async function updateProfile(userId: number, name: string) {
+  await prisma.user.update({ where: { id: userId }, data: { displayName: name } })
+}
+
 export async function requestPasswordReset(email: string): Promise<void> {
   const user = await prisma.user.findUnique({ where: { email } })
   if (!user) return

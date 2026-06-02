@@ -2,7 +2,7 @@ import { Router } from 'express'
 import { asyncHandler } from '../../middleware/asyncHandler'
 import { requireUser } from '../../middleware/requireRole'
 import { validate } from '../../middleware/validate'
-import { forgotSchema, loginSchema, resetSchema } from './auth.schema'
+import { changePasswordSchema, forgotSchema, loginSchema, profileSchema, resetSchema } from './auth.schema'
 import * as authService from './auth.service'
 import { clearSession, issueSession, loadSessionUser } from './session'
 
@@ -26,6 +26,26 @@ authRouter.post('/logout', (_req, res) => {
 authRouter.get('/me', requireUser, (req, res) => {
   res.json(req.user)
 })
+
+authRouter.post(
+  '/change-password',
+  requireUser,
+  validate(changePasswordSchema),
+  asyncHandler(async (req, res) => {
+    await authService.changePassword(req.user!.id, req.body.currentPassword, req.body.newPassword)
+    res.json({ ok: true })
+  }),
+)
+
+authRouter.patch(
+  '/me',
+  requireUser,
+  validate(profileSchema),
+  asyncHandler(async (req, res) => {
+    await authService.updateProfile(req.user!.id, req.body.name)
+    res.json(await loadSessionUser(req.user!.id))
+  }),
+)
 
 authRouter.post(
   '/forgot',
