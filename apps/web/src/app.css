@@ -770,3 +770,56 @@ textarea.editor {
 .nav-user a {
   color: #f4efe6;
 }
+.calendar {
+  display: grid;
+  gap: 2px 0;
+  background: white;
+  border: 1px solid #d6c9b0;
+  border-radius: 6px;
+  padding: 8px;
+  overflow-x: auto;
+  font-size: 12px;
+}
+.cal-head {
+  text-align: center;
+  color: #7a6a58;
+  border-bottom: 1px solid #eee3cf;
+}
+.cal-today {
+  background: #fff3cd;
+  font-weight: bold;
+}
+.cal-name {
+  grid-column: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 6px;
+}
+.cal-bar {
+  height: 14px;
+  border-radius: 7px;
+  margin: 2px 1px;
+  cursor: pointer;
+}
+.cal-booked {
+  opacity: 0.5;
+  border: 1px dashed #3b2a1a;
+}
+.cal-boarding {
+  background: #8cc084;
+}
+.cal-treatment {
+  background: #d9776c;
+}
+.cal-therapy {
+  background: #9a8ccf;
+}
+.cal-surrender {
+  background: #c9b79c;
+}
+.legend span {
+  padding: 1px 6px;
+  border-radius: 6px;
+  font-size: 12px;
+}

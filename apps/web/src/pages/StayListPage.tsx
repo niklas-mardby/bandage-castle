@@ -25,7 +25,7 @@ export default class StayListPage extends React.Component<any, State> {
     return (
       <div className="page">
         <h2>Stays</h2>
-        <Link to="/stays/new">+ New booking</Link>
+        <Link to="/stays/new">+ New booking</Link> | <Link to="/stays/calendar">📅 Calendar</Link>
         <div>
           <select value={this.state.status} onChange={(e) => this.setState({ status: e.target.value }, () => this.load())}>
             <option value="">All</option>

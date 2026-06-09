@@ -13,6 +13,7 @@ import CustomerDetailPage from './pages/customers/CustomerDetailPage'
 import NewCustomerPage from './pages/customers/NewCustomerPage'
 import StayListPage from './pages/StayListPage'
 import StayDetailPage from './pages/stays/StayDetailPage'
+import StayCalendarPage from './pages/stays/StayCalendarPage'
 import NewStayPage from './pages/NewStayPage'
 import InvoiceListPage from './pages/InvoiceListPage'
 import InvoiceDetailPage from './pages/InvoiceDetailPage'
@@ -75,6 +76,7 @@ export default function App() {
         <Route path="/customers/:id" element={<CustomerDetailPage />} />
         <Route path="/stays" element={<StayListPage />} />
         <Route path="/stays/new" element={<NewStayPage />} />
+        <Route path="/stays/calendar" element={<StayCalendarPage />} />
         <Route path="/stays/:id" element={<StayDetailPage />} />
         <Route path="/invoices" element={<InvoiceListPage />} />
         <Route path="/invoices/:id" element={<InvoiceDetailPage />} />

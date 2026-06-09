@@ -8,6 +8,39 @@ import { requireRole } from '../../middleware/requireRole'
 
 export const staysRouter = Router()
 
+/**
+ * Stays overlapping a month, for the calendar. Must be registered before
+ * /:id routes, and before the legacy router (which would treat "calendar" as an id).
+ */
+staysRouter.get(
+  '/calendar',
+  requireRole('ADMIN', 'FRONT_DESK', 'KEEPER', 'VET', 'THERAPIST'),
+  asyncHandler(async (req, res) => {
+    const month = typeof req.query.month === 'string' && /^\d{4}-\d{2}$/.test(req.query.month) ? req.query.month : new Date().toISOString().slice(0, 7)
+    const [y, m] = month.split('-').map(Number)
+    const first = new Date(Date.UTC(y, m - 1, 1))
+    const last = new Date(Date.UTC(y, m, 0))
+    const stays = await prisma.stay.findMany({
+      where: {
+        status: { not: 'CANCELLED' },
+        startDate: { lte: last },
+        OR: [{ expectedPickup: null }, { expectedPickup: { gte: first } }],
+      },
+      select: {
+        id: true,
+        reason: true,
+        status: true,
+        startDate: true,
+        expectedPickup: true,
+        checkedOutAt: true,
+        monster: { select: { id: true, name: true, species: { select: { name: true } } } },
+      },
+      orderBy: { startDate: 'asc' },
+    })
+    res.json({ month, days: last.getUTCDate(), stays })
+  }),
+)
+
 staysRouter.get(
   '/:id/details',
   requireRole('ADMIN', 'FRONT_DESK', 'KEEPER', 'VET'),
