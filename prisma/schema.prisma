@@ -785,3 +785,25 @@ model LairFeedingOverride {
   @@index([lairId])
   @@map("lair_feeding_overrides")
 }
+
+/// Owners asking for a stay from the app. Front desk turns them into stays.
+model BookingRequest {
+  id          Int       @id @default(autoincrement())
+  customerId  Int       @map("customer_id")
+  monsterId   Int       @map("monster_id")
+  reason      String    @db.VarChar(32)
+  startDate   DateTime  @map("start_date") @db.Date
+  endDate     DateTime  @map("end_date") @db.Date
+  message     String?   @db.Text
+  /// PENDING | APPROVED | DECLINED | CANCELLED
+  status      String    @default("PENDING") @db.VarChar(16)
+  declineNote String?   @map("decline_note") @db.VarChar(255)
+  stayId      Int?      @map("stay_id")
+  decidedById Int?      @map("decided_by_id")
+  decidedAt   DateTime? @map("decided_at")
+  createdAt   DateTime  @default(now()) @map("created_at")
+
+  @@index([customerId])
+  @@index([status])
+  @@map("booking_requests")
+}

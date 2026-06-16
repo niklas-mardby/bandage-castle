@@ -27,6 +27,8 @@ import BulletinEditorPage from './pages/bulletin/BulletinEditorPage'
 import DashboardPage from './pages/dashboard/DashboardPage'
 import NotFoundPage from './pages/NotFoundPage'
 import AccountPage from './pages/account/AccountPage'
+import BookStayPage from './pages/bookings/BookStayPage'
+import BookingRequestsPage from './pages/bookings/BookingRequestsPage'
 import ClassicReportsPage from './pages/ReportsPage'
 import ReportsPage from './pages/reports/ReportsPage'
 import MyMonstersPage from './pages/MyMonstersPage'
@@ -134,6 +136,8 @@ export default function App() {
           }
         />
         <Route path="/account" element={<AccountPage />} />
+        <Route path="/book" element={<BookStayPage />} />
+        <Route path="/bookings" element={<BookingRequestsPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>
