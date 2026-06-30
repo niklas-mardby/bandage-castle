@@ -24,24 +24,24 @@
     "billing:backfill": "tsx scripts/backfill-billing-v2.ts"
   },
   "devDependencies": {
-    "concurrently": "^8.2.2",
-    "prisma": "^5.7.0",
-    "vitest": "^1.0.4",
-    "dotenv": "^16.3.1",
-    "tsx": "^4.6.2",
-    "mysql2": "^3.6.5",
+    "concurrently": "^9.2.1",
+    "prisma": "^6.19.0",
+    "vitest": "^3.2.4",
+    "dotenv": "^16.6.1",
+    "tsx": "^4.20.6",
+    "mysql2": "^3.15.0",
     "bcryptjs": "^2.4.3",
-    "eslint": "^8.54.0",
-    "@eslint/js": "^8.54.0",
-    "typescript-eslint": "^7.0.0",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "prettier": "^3.1.0"
+    "eslint": "^9.36.0",
+    "@eslint/js": "^9.36.0",
+    "typescript-eslint": "^8.44.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "prettier": "^3.6.2"
   },
   "engines": {
-    "node": ">=18.17"
+    "node": ">=22"
   },
   "dependencies": {
-    "@prisma/client": "^5.7.0"
+    "@prisma/client": "^6.19.0"
   },
   "prisma": {
     "schema": "prisma/schema.prisma",
