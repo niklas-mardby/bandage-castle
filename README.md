@@ -137,6 +137,7 @@ Run these from the repository root.
 | `npm run db:check` | Check that the database in `.env` is reachable |
 | `npm run db:migrate` | Apply new migrations |
 | `npm test` | Run all tests (needs `npm run setup` first) |
+| `npm run test:coverage` | Tests with a coverage report (`coverage/index.html`) |
 | `npm run typecheck` | Type-check all workspaces |
 | `npm run lint` | ESLint |
 | `npm run format` | Prettier |
