@@ -25,6 +25,19 @@ suppliesRouter.get(
 )
 
 suppliesRouter.get(
+  '/reorder',
+  asyncHandler(async (req, res) => {
+    const list = await suppliesService.reorderList()
+    if (req.query.format !== 'csv') return res.json(list)
+    const rows = list.flatMap((g) => g.lines.map((l) => [g.supplier, l.name, l.orderQuantity, l.unit]))
+    const csv = ['supplier,item,quantity,unit', ...rows.map((r) => r.map((v) => (String(v).includes(',') ? `"${v}"` : v)).join(','))].join('\n')
+    res.setHeader('Content-Type', 'text/csv; charset=utf-8')
+    res.setHeader('Content-Disposition', 'attachment; filename="reorder.csv"')
+    res.send(csv + '\n')
+  }),
+)
+
+suppliesRouter.get(
   '/:id',
   asyncHandler(async (req, res) => {
     res.json(await suppliesService.getSupply(Number(req.params.id)))

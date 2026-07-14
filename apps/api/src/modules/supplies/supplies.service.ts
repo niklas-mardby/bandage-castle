@@ -32,6 +32,25 @@ export async function lowStock() {
   return (await listSupplies()).filter((s) => s.isLow)
 }
 
+export type ReorderLine = { id: number; name: string; unit: string; quantity: number; lowStockThreshold: number; orderQuantity: number }
+
+/**
+ * What to order, per supplier. We top up to twice the reorder level so we
+ * don't have to order again next week.
+ */
+export async function reorderList() {
+  const low = await lowStock()
+  const bySupplier = new Map<string, ReorderLine[]>()
+  for (const s of low) {
+    const supplier = s.supplier ?? 'No supplier on file'
+    const orderQuantity = Math.max(1, Math.ceil(s.lowStockThreshold * 2 - s.quantity))
+    const lines = bySupplier.get(supplier) ?? []
+    lines.push({ id: s.id, name: s.name, unit: s.unit, quantity: s.quantity, lowStockThreshold: s.lowStockThreshold, orderQuantity })
+    bySupplier.set(supplier, lines)
+  }
+  return [...bySupplier.entries()].map(([supplier, lines]) => ({ supplier, lines })).sort((a, b) => a.supplier.localeCompare(b.supplier))
+}
+
 export async function getSupply(id: number) {
   const supply = await prisma.supply.findUnique({
     where: { id },

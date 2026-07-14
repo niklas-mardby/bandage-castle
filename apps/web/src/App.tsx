@@ -47,6 +47,7 @@ import TicketListPage from './pages/tickets/TicketListPage'
 import TicketDetailPage from './pages/tickets/TicketDetailPage'
 import NewTicketPage from './pages/tickets/NewTicketPage'
 import SuppliesPage from './pages/supplies/SuppliesPage'
+import ReorderPage from './pages/supplies/ReorderPage'
 import FeedingPage from './pages/feeding/FeedingPage'
 import HiringHallPage from './pages/hiring/HiringHallPage'
 import ListingDetailPage from './pages/hiring/ListingDetailPage'
@@ -103,6 +104,7 @@ export default function App() {
         <Route path="/tickets/new" element={<NewTicketPage />} />
         <Route path="/tickets/:id" element={<TicketDetailPage />} />
         <Route path="/supplies" element={<SuppliesPage />} />
+        <Route path="/supplies/reorder" element={<ReorderPage />} />
         <Route path="/feeding" element={<FeedingPage />} />
         <Route path="/hiring" element={<HiringHallPage />} />
         <Route path="/hiring/manage" element={<ManageListingsPage />} />

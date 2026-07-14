@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { apiFetch } from '../../api'
 import { useApi } from '../../hooks/useApi'
 
@@ -108,6 +109,7 @@ export default function SuppliesPage() {
   return (
     <div className="page">
       <h2>📦 Supplies</h2>
+      <Link to="/supplies/reorder">🛒 Reorder list →</Link>
       {low.length > 0 && (
         <div className="warning">
           ⚠️ Running low on: {low.map((s) => `${s.name} (${s.quantity} ${s.unit})`).join(', ')}
