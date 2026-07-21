@@ -54,6 +54,7 @@ import ListingDetailPage from './pages/hiring/ListingDetailPage'
 import ManageListingsPage from './pages/hiring/ManageListingsPage'
 import ApplicationsPage from './pages/hiring/ApplicationsPage'
 import ContractsPage from './pages/hiring/ContractsPage'
+import ContractPrintPage from './pages/hiring/ContractPrintPage'
 
 export default function App() {
   return (
@@ -110,6 +111,7 @@ export default function App() {
         <Route path="/hiring/manage" element={<ManageListingsPage />} />
         <Route path="/hiring/applications" element={<ApplicationsPage />} />
         <Route path="/hiring/contracts" element={<ContractsPage />} />
+        <Route path="/hiring/contracts/:id/print" element={<ContractPrintPage />} />
         <Route path="/hiring/:id" element={<ListingDetailPage />} />
         <Route path="/my/monsters" element={<MyMonstersPage />} />
         <Route path="/my/invoices" element={<MyInvoicesPage />} />

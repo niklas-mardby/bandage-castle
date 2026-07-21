@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { hasRole, toGoldString } from '@bandage/shared'
 import { apiFetch } from '../../api'
 import { useAuth } from '../../auth/AuthProvider'
+import { Link } from 'react-router-dom'
 import { useApi } from '../../hooks/useApi'
 
 type Contract = {
@@ -39,6 +40,7 @@ export default function ContractsPage() {
             Fee <b>{toGoldString(c.fee)}</b>, starting {c.startDate.slice(0, 10)}
           </p>
           <pre className="terms">{c.terms}</pre>
+          <Link to={`/hiring/contracts/${c.id}/print`}>🖨️ Printable version</Link>
           {c.signedAt ? (
             <p className="success">✍️ Signed {c.signedAt.slice(0, 10)}</p>
           ) : isOverlord ? (

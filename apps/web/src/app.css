@@ -823,3 +823,43 @@ textarea.editor {
   border-radius: 6px;
   font-size: 12px;
 }
+.contract-parchment {
+  max-width: 720px;
+  margin: 20px auto;
+  padding: 40px 50px;
+  background: #f7ecd2;
+  border: 2px solid #c9b07a;
+  box-shadow: inset 0 0 40px rgba(120, 90, 40, 0.25);
+  font-family: Georgia, serif;
+}
+.contract-parchment h1 {
+  text-align: center;
+}
+.contract-ref {
+  text-align: center;
+  letter-spacing: 2px;
+}
+.signatures {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 40px;
+}
+.signature-line {
+  border-bottom: 1px solid #3b2a1a;
+  width: 220px;
+  height: 30px;
+}
+.seal {
+  text-align: right;
+  font-size: 40px;
+}
+@media print {
+  .nav,
+  .no-print {
+    display: none !important;
+  }
+  .contract-parchment {
+    box-shadow: none;
+    border: none;
+  }
+}
