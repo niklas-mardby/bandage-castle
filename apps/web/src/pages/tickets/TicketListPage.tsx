@@ -49,6 +49,7 @@ export default function TicketListPage() {
       <h2>🎫 Tickets</h2>
       <div className="toolbar">
         <Link to="/tickets/new">+ New ticket</Link>
+        <Link to="/tickets/board">🗂️ Board</Link>
         <select value={status} onChange={(e) => setStatus(e.target.value)}>
           <option value="">All statuses</option>
           {Object.entries(STATUS_LABEL).map(([value, label]) => (

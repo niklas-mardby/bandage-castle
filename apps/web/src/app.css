@@ -863,3 +863,41 @@ textarea.editor {
     border: none;
   }
 }
+.board {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+.board-col {
+  background: #efe6d4;
+  border-radius: 8px;
+  padding: 8px;
+  min-height: 300px;
+}
+.board-card {
+  background: white;
+  border-radius: 6px;
+  padding: 8px;
+  margin-bottom: 8px;
+  border-left: 4px solid #c9b79c;
+}
+.board-card.prio-high {
+  border-left-color: #e3b75b;
+}
+.board-card.prio-urgent {
+  border-left-color: #d9776c;
+}
+.board-card p {
+  margin: 4px 0;
+  font-size: 12px;
+}
+.board-moves {
+  display: flex;
+  justify-content: space-between;
+}
+.board-moves button {
+  background: none;
+  border: 1px solid #d6c9b0;
+  border-radius: 4px;
+  cursor: pointer;
+}
