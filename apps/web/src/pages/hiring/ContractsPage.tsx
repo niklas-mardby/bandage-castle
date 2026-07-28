@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom'
 import { hasRole, toGoldString } from '@bandage/shared'
 import { apiFetch } from '../../api'
 import { useAuth } from '../../auth/AuthProvider'
-import { Link } from 'react-router-dom'
 import { useApi } from '../../hooks/useApi'
 
 type Contract = {
