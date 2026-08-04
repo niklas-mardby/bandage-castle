@@ -901,3 +901,40 @@ textarea.editor {
   border-radius: 4px;
   cursor: pointer;
 }
+.searchbox {
+  display: inline-block;
+  position: relative;
+  margin-right: 10px;
+}
+.searchbox input {
+  width: 220px;
+  padding: 3px 8px;
+  border-radius: 12px;
+  border: none;
+}
+.search-results {
+  position: absolute;
+  top: 28px;
+  right: 0;
+  width: 360px;
+  background: white;
+  color: #2b1d10;
+  border: 1px solid #d6c9b0;
+  border-radius: 6px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  z-index: 20;
+  padding: 4px;
+}
+.search-hit {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  padding: 6px;
+  cursor: pointer;
+  font: inherit;
+}
+.search-hit.active {
+  background: #fff3cd;
+}
