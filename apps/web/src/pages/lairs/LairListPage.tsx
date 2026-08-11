@@ -51,6 +51,7 @@ export default function LairListPage() {
   return (
     <div className="page">
       <h2>🏚️ Lairs</h2>
+      <Link to="/lairs/new">+ New lair</Link>
       {unassigned && unassigned.length > 0 && (
         <p className="warning">
           ⚠️ {unassigned.length} monster(s) in residence have no lair: {unassigned.map((m) => m.name).join(', ')}

@@ -44,7 +44,9 @@ export default function SpeciesDetailPage() {
   return (
     <div className="page">
       <Link to="/species">← Compendium</Link>
-      <h2>{species.name}</h2>
+      <h2>
+        {species.name} {hasRole(user, 'ADMIN', 'VET') && <Link to={`/species/${species.slug}/edit`}>✏️</Link>}
+      </h2>
       <DangerLevel level={species.dangerLevel} />
       {species.description && <p>{species.description}</p>}
 

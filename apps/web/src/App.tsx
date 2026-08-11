@@ -38,8 +38,10 @@ import AuditLogPage from './pages/admin/AuditLogPage'
 import SettingsPage from './pages/admin/SettingsPage'
 import SpeciesListPage from './pages/species/SpeciesListPage'
 import SpeciesDetailPage from './pages/species/SpeciesDetailPage'
+import SpeciesFormPage from './pages/species/SpeciesFormPage'
 import LairListPage from './pages/lairs/LairListPage'
 import LairDetailPage from './pages/lairs/LairDetailPage'
+import LairFormPage from './pages/lairs/LairFormPage'
 import IntakePage from './pages/intake/IntakePage'
 import VetDashboardPage from './pages/medical/VetDashboardPage'
 import MonsterMedicalPage from './pages/medical/MonsterMedicalPage'
@@ -96,9 +98,13 @@ export default function App() {
         <Route path="/reports" element={<ReportsPage />} />
         <Route path="/reports/classic" element={<ClassicReportsPage />} />
         <Route path="/species" element={<SpeciesListPage />} />
+        <Route path="/species/new" element={<SpeciesFormPage />} />
         <Route path="/species/:slug" element={<SpeciesDetailPage />} />
+        <Route path="/species/:slug/edit" element={<SpeciesFormPage />} />
         <Route path="/lairs" element={<LairListPage />} />
+        <Route path="/lairs/new" element={<LairFormPage />} />
         <Route path="/lairs/:id" element={<LairDetailPage />} />
+        <Route path="/lairs/:id/edit" element={<LairFormPage />} />
         <Route path="/intake" element={<IntakePage />} />
         <Route path="/vet" element={<VetDashboardPage />} />
         <Route path="/monsters/:id/medical" element={<MonsterMedicalPage />} />

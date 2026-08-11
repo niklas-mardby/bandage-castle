@@ -47,7 +47,9 @@ export default function LairDetailPage() {
   return (
     <div className="page">
       <Link to="/lairs">← All lairs</Link>
-      <h2>{lair.name}</h2>
+      <h2>
+        {lair.name} {canAssign && <Link to={`/lairs/${lair.id}/edit`}>✏️</Link>}
+      </h2>
       <p className="muted">
         {lair.wing.replace('_', ' ').toLowerCase()} · capacity {lair.capacity} · 🌡️ {lair.temperatureC} °C · 💧 {lair.humidity}% · 🌑{' '}
         {lair.darkness}%
