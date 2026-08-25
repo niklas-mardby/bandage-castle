@@ -29,6 +29,7 @@ import NotFoundPage from './pages/NotFoundPage'
 import AccountPage from './pages/account/AccountPage'
 import BookStayPage from './pages/bookings/BookStayPage'
 import BookingRequestsPage from './pages/bookings/BookingRequestsPage'
+import NotificationsPage from './pages/notifications/NotificationsPage'
 import ClassicReportsPage from './pages/ReportsPage'
 import ReportsPage from './pages/reports/ReportsPage'
 import MyMonstersPage from './pages/MyMonstersPage'
@@ -150,6 +151,7 @@ export default function App() {
         <Route path="/account" element={<AccountPage />} />
         <Route path="/book" element={<BookStayPage />} />
         <Route path="/bookings" element={<BookingRequestsPage />} />
+        <Route path="/notifications" element={<NotificationsPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>

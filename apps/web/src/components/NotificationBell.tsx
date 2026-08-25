@@ -34,6 +34,9 @@ export default function NotificationBell() {
       {open && (
         <div className="bell-dropdown">
           <div className="bell-header">
+            <Link to="/notifications" onClick={() => setOpen(false)}>
+              see all
+            </Link>
             <b>Notifications</b>
             {unread > 0 && (
               <button className="link" onClick={() => markAll.mutate()}>
