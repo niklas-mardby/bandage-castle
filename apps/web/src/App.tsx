@@ -18,6 +18,7 @@ import NewStayPage from './pages/NewStayPage'
 import InvoiceListPage from './pages/InvoiceListPage'
 import InvoiceDetailPage from './pages/InvoiceDetailPage'
 import InvoicesV2Page from './pages/billing/InvoicesV2Page'
+import InvoiceV2DetailPage from './pages/billing/InvoiceV2DetailPage'
 import TherapyPlansPage from './pages/therapy/TherapyPlansPage'
 import TherapyPlanPage from './pages/therapy/TherapyPlanPage'
 import BulletinIndexPage from './pages/bulletin/BulletinIndexPage'
@@ -89,6 +90,7 @@ export default function App() {
         <Route path="/invoices" element={<InvoiceListPage />} />
         <Route path="/invoices/:id" element={<InvoiceDetailPage />} />
         <Route path="/billing/v2" element={<InvoicesV2Page />} />
+        <Route path="/billing/v2/:id" element={<InvoiceV2DetailPage />} />
         <Route path="/therapy" element={<TherapyPlansPage />} />
         <Route path="/therapy/:id" element={<TherapyPlanPage />} />
         <Route path="/bulletin" element={<BulletinIndexPage />} />

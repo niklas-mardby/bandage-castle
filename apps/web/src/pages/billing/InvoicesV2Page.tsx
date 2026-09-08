@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { formatCopper, toCopper } from '@bandage/shared'
 import { apiFetch } from '../../api'
@@ -82,7 +83,7 @@ export default function InvoicesV2Page() {
           {invoices?.map((i) => (
             <tr key={i.id}>
               <td>
-                {i.number} {i.legacyInvoiceId && <span className="muted">(was #{i.legacyInvoiceId})</span>}
+                <Link to={`/billing/v2/${i.id}`}>{i.number}</Link> {i.legacyInvoiceId && <span className="muted">(was #{i.legacyInvoiceId})</span>}
               </td>
               <td>{formatDay(i.issuedAt)}</td>
               <td>{formatDay(i.dueAt)}</td>
