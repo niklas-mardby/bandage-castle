@@ -944,3 +944,14 @@ textarea.editor {
 .notification.read {
   opacity: 0.7;
 }
+.rounds {
+  list-style: none;
+  padding: 0;
+}
+.rounds li {
+  padding: 4px 0;
+}
+.rounds li.done {
+  color: #9b8c7a;
+  text-decoration: line-through;
+}

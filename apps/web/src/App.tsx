@@ -47,6 +47,7 @@ import LairFormPage from './pages/lairs/LairFormPage'
 import IntakePage from './pages/intake/IntakePage'
 import VetDashboardPage from './pages/medical/VetDashboardPage'
 import MonsterMedicalPage from './pages/medical/MonsterMedicalPage'
+import RoundsPage from './pages/medical/RoundsPage'
 import TicketListPage from './pages/tickets/TicketListPage'
 import TicketDetailPage from './pages/tickets/TicketDetailPage'
 import TicketBoardPage from './pages/tickets/TicketBoardPage'
@@ -110,6 +111,7 @@ export default function App() {
         <Route path="/lairs/:id/edit" element={<LairFormPage />} />
         <Route path="/intake" element={<IntakePage />} />
         <Route path="/vet" element={<VetDashboardPage />} />
+        <Route path="/rounds" element={<RoundsPage />} />
         <Route path="/monsters/:id/medical" element={<MonsterMedicalPage />} />
         <Route path="/tickets" element={<TicketListPage />} />
         <Route path="/tickets/new" element={<NewTicketPage />} />
