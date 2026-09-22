@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { hasRole } from '@bandage/shared'
 import { apiFetch } from '../../api'
+import { useAuth } from '../../auth/AuthProvider'
 import { formatShortDate, userName } from '../../utils/format'
 import { CATEGORY_ICON, PRIORITY_ICON, STATUS_LABEL, type Ticket } from './types'
 
@@ -13,6 +15,13 @@ export default function TicketListPage() {
   const [tickets, setTickets] = useState<Ticket[]>([])
   const [nextCursor, setNextCursor] = useState<number | null>(null)
   const [loading, setLoading] = useState(false)
+  const [rotaMessage, setRotaMessage] = useState('')
+  const { user } = useAuth()
+
+  const runRota = async () => {
+    const r = await apiFetch('/tickets/recurring/run', { method: 'POST' })
+    setRotaMessage(`🧹 ${r.created} cleaning ticket(s) created for the week of ${r.weekStart}`)
+  }
 
   const query = (cursor?: number) => {
     const params = new URLSearchParams()
@@ -50,6 +59,7 @@ export default function TicketListPage() {
       <div className="toolbar">
         <Link to="/tickets/new">+ New ticket</Link>
         <Link to="/tickets/board">🗂️ Board</Link>
+        {hasRole(user, 'ADMIN') && <button onClick={runRota}>🧹 Create this week's cleaning tickets</button>}
         <select value={status} onChange={(e) => setStatus(e.target.value)}>
           <option value="">All statuses</option>
           {Object.entries(STATUS_LABEL).map(([value, label]) => (
@@ -71,6 +81,7 @@ export default function TicketListPage() {
         </label>
       </div>
 
+      {rotaMessage && <p className="success">{rotaMessage}</p>}
       <table className="table">
         <thead>
           <tr>

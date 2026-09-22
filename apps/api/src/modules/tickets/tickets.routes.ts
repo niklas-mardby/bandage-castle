@@ -4,6 +4,7 @@ import { requireRole } from '../../middleware/requireRole'
 import { validate } from '../../middleware/validate'
 import { commentSchema, createTicketSchema, listQuerySchema, statusSchema, updateTicketSchema, type ListQuery } from './tickets.schema'
 import * as ticketsService from './tickets.service'
+import { createWeeklyCleaningTickets } from './recurring'
 
 export const ticketsRouter = Router()
 
@@ -21,6 +22,14 @@ ticketsRouter.get(
   '/assignees',
   asyncHandler(async (_req, res) => {
     res.json(await ticketsService.assignees())
+  }),
+)
+
+ticketsRouter.post(
+  '/recurring/run',
+  requireRole('ADMIN'),
+  asyncHandler(async (req, res) => {
+    res.json(await createWeeklyCleaningTickets(new Date(), req.user!.id))
   }),
 )
 
