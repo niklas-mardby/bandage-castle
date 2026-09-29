@@ -807,3 +807,18 @@ model BookingRequest {
   @@index([status])
   @@map("booking_requests")
 }
+
+/// One row per scheduled job per day, so restarts don't send reminders twice.
+model JobRun {
+  id         Int       @id @default(autoincrement())
+  name       String    @db.VarChar(64)
+  runDate    DateTime  @map("run_date") @db.Date
+  startedAt  DateTime  @default(now()) @map("started_at")
+  finishedAt DateTime? @map("finished_at")
+  /// OK | FAILED | RUNNING
+  status     String    @default("RUNNING") @db.VarChar(16)
+  summary    String?   @db.VarChar(255)
+
+  @@unique([name, runDate])
+  @@map("job_runs")
+}

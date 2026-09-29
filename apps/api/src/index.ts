@@ -1,12 +1,14 @@
 import './env'
 import { createApp } from './app'
 import { startRavenLoop } from './legacy'
+import { startJobs } from './modules/jobs/jobs'
 
 const port = Number(process.env.PORT) || 3001
 
 const server = createApp().listen(port, () => {
   console.log(`🏰 Bandage Castle API listening on http://localhost:${port}`)
   startRavenLoop()
+  startJobs()
 })
 
 server.on('error', (err: NodeJS.ErrnoException) => {

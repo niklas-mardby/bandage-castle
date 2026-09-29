@@ -28,6 +28,7 @@ import { reportsRouter } from './modules/reports/reports.routes'
 import { monsterProfilesRouter } from './modules/monsters/monsters.routes'
 import { bookingsRouter } from './modules/bookings/bookings.routes'
 import { searchRouter } from './modules/search/search.routes'
+import { jobsRouter } from './modules/jobs/jobs.routes'
 
 export function createApp() {
   const app = express()
@@ -63,6 +64,7 @@ export function createApp() {
   app.use('/api/monster-profiles', monsterProfilesRouter)
   app.use('/api/booking-requests', bookingsRouter)
   app.use('/api/search', searchRouter)
+  app.use('/api/jobs', jobsRouter)
   app.use('/api/stays', stayExtensionsRouter, staysRouter) // the rest of /api/stays is in legacy
 
   // pre-2023 routes

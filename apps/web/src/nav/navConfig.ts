@@ -43,4 +43,5 @@ export const NAV: NavItem[] = [
   { group: 'admin', to: '/admin/users', label: 'Users', icon: '👥', roles: ['ADMIN'] },
   { group: 'admin', to: '/admin/audit', label: 'Audit', icon: '🕵️', roles: ['ADMIN'] },
   { group: 'admin', to: '/admin/settings', label: 'Settings', icon: '⚙️', roles: ['ADMIN'] },
+  { group: 'admin', to: '/admin/jobs', label: 'Jobs', icon: '⏰', roles: ['ADMIN'] },
 ]
