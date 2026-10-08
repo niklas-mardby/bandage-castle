@@ -8,6 +8,7 @@ import MonsterListPage from './pages/MonsterListPage'
 import MonsterDetailPage from './pages/MonsterDetailPage'
 import MonsterFormPage from './pages/MonsterFormPage'
 import MonsterProfilePage from './pages/monsters/MonsterProfilePage'
+import MonsterBrowserPage from './pages/monsters/MonsterBrowserPage'
 import CustomerListPage from './pages/customers/CustomerListPage'
 import CustomerDetailPage from './pages/customers/CustomerDetailPage'
 import NewCustomerPage from './pages/customers/NewCustomerPage'
@@ -78,6 +79,7 @@ export default function App() {
       >
         <Route path="/" element={<DashboardPage />} />
         <Route path="/monsters" element={<MonsterListPage />} />
+        <Route path="/monsters/browse" element={<MonsterBrowserPage />} />
         <Route path="/monsters/new" element={<MonsterFormPage />} />
         <Route path="/monsters/:id" element={<MonsterDetailPage />} />
         <Route path="/monsters/:id/edit" element={<MonsterFormPage />} />

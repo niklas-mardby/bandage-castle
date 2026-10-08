@@ -32,7 +32,7 @@ export default class MonsterListPage extends React.Component<any, State> {
     return (
       <div className="page">
         <h2>Monsters</h2>
-        <Link to="/monsters/new">+ New monster</Link>
+        <Link to="/monsters/new">+ New monster</Link> | <Link to="/monsters/browse">🔎 Browse with filters</Link>
         <form onSubmit={this.onSubmit}>
           <input placeholder="name or species" value={this.state.search} onChange={(e) => this.setState({ search: e.target.value })} />
           <button type="submit">Search</button>
