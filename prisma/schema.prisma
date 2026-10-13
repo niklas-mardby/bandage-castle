@@ -822,3 +822,21 @@ model JobRun {
   @@unique([name, runDate])
   @@map("job_runs")
 }
+
+/// Owners visiting their monsters during visiting hours.
+model Visit {
+  id          Int      @id @default(autoincrement())
+  customerId  Int      @map("customer_id")
+  monsterId   Int      @map("monster_id")
+  visitAt     DateTime @map("visit_at")
+  durationMin Int      @default(30) @map("duration_min")
+  guests      Int      @default(1)
+  /// REQUESTED | CONFIRMED | CANCELLED | DONE
+  status      String   @default("REQUESTED") @db.VarChar(16)
+  note        String?  @db.VarChar(255)
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  @@index([visitAt])
+  @@index([customerId])
+  @@map("visits")
+}
