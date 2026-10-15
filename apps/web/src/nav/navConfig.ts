@@ -19,6 +19,7 @@ export const NAV: NavItem[] = [
   { group: 'main', to: '/bulletin', label: 'Bulletin', icon: '📜', roles: STAFF },
   { group: 'main', to: '/species', label: 'Species', icon: '📖' },
 
+  { group: 'care', to: '/my-day', label: 'My day', icon: '☀️', roles: ['KEEPER'] },
   { group: 'care', to: '/monsters', label: 'Monsters', icon: '🐉', roles: STAFF },
   { group: 'care', to: '/lairs', label: 'Lairs', icon: '🏚️', roles: ['ADMIN', 'KEEPER', 'FRONT_DESK', 'VET'] },
   { group: 'care', to: '/feeding', label: 'Feeding', icon: '🍖', roles: CARE },
