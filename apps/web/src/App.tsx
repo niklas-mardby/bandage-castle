@@ -34,6 +34,7 @@ import BookingRequestsPage from './pages/bookings/BookingRequestsPage'
 import NotificationsPage from './pages/notifications/NotificationsPage'
 import VisitsPage from './pages/visits/VisitsPage'
 import MyDayPage from './pages/keeper/MyDayPage'
+import MonsterDiaryPage from './pages/owners/MonsterDiaryPage'
 import ClassicReportsPage from './pages/ReportsPage'
 import ReportsPage from './pages/reports/ReportsPage'
 import MyMonstersPage from './pages/MyMonstersPage'
@@ -180,6 +181,7 @@ export default function App() {
         <Route path="/notifications" element={<NotificationsPage />} />
         <Route path="/visits" element={<VisitsPage />} />
         <Route path="/my-day" element={<MyDayPage />} />
+        <Route path="/my/monsters/:id/diary" element={<MonsterDiaryPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>

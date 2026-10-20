@@ -183,7 +183,7 @@ export function CustomerSection({ overlord }: { overlord: boolean }) {
           {data.monsters.map((m) => {
             const stay = m.stays[0]
             return (
-              <Link className="card monster-card" key={m.id} to={`/monsters/${m.id}`}>
+              <Link className="card monster-card" key={m.id} to={`/my/monsters/${m.id}/diary`}>
                 <img src={`/api/monsters/${m.id}/photo`} alt={m.name} width={100} />
                 <h4>{m.name}</h4>
                 <p className="muted">{m.species?.name}</p>
