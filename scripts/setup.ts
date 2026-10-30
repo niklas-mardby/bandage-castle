@@ -6,7 +6,8 @@ import path from 'path'
 import { checkDatabase } from './check-db'
 
 const root = path.resolve(__dirname, '..')
-const MIN_NODE_MAJOR = 18
+const MIN_NODE_MAJOR = 22
+const RECOMMENDED_NODE_MAJOR = 26
 
 function run(title: string, command: string) {
   console.log(`\n${title}`)
@@ -18,8 +19,12 @@ async function main() {
 
   const major = Number(process.versions.node.split('.')[0])
   if (major < MIN_NODE_MAJOR) {
-    console.error(`🚨 Node ${process.versions.node} is too old. Please install Node ${MIN_NODE_MAJOR} or newer.`)
+    console.error(`🚨 Node ${process.versions.node} is too old. Please install Node ${RECOMMENDED_NODE_MAJOR} LTS from https://nodejs.org/`)
     process.exit(1)
+  }
+  if (major !== RECOMMENDED_NODE_MAJOR) {
+    console.warn(`⚠️  You are running Node ${process.versions.node}. Bandage Castle is developed and tested on Node ${RECOMMENDED_NODE_MAJOR} LTS.`)
+    console.warn(`   It will probably work, but if anything looks odd, install Node ${RECOMMENDED_NODE_MAJOR} LTS from https://nodejs.org/\n`)
   }
 
   await checkDatabase()

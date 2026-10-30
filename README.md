@@ -45,7 +45,7 @@ This repository is the castle's management app: a React front end and an Express
 
 ### 1. Install the tools 🛠️
 
-- 🟢 **Node.js 22 LTS** or newer: <https://nodejs.org/>
+- 🟢 **Node.js 26 LTS**: <https://nodejs.org/> (the big "LTS" download button). There is an `.nvmrc` if you use nvm.
 - 🐬 **MySQL 8**: <https://dev.mysql.com/downloads/mysql/> (Windows users: the *MySQL Installer* is easiest). Remember the `root` password you choose!
 
 Check that Node works:
@@ -200,7 +200,7 @@ Another program, often a second copy of `npm run dev`, is using the port. Close 
 
 ### 🟢 Wrong Node version
 
-Run `node --version`. If it's older than the version in step 1, install the current LTS from <https://nodejs.org/>. With nvm: `nvm install --lts` and `nvm use --lts`.
+Run `node --version`. Bandage Castle is built and tested on **Node 26 LTS**. Older versions get a warning from `npm run setup` (and Node 21 or older won't work at all). Install Node 26 LTS from <https://nodejs.org/>, or with nvm: `nvm install 26` and `nvm use 26`.
 
 ### 🪟 `EPERM: operation not permitted, rename ... query_engine` (Windows)
 
