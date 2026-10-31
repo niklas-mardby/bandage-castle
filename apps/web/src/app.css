@@ -958,3 +958,25 @@ textarea.editor {
 .toolbar.wrap {
   flex-wrap: wrap;
 }
+
+/* 🎃 Halloween (only in October, see main.tsx) */
+body.halloween {
+  background: #2b1d10;
+  color: #f4efe6;
+}
+body.halloween .page {
+  background: #3b2a1a;
+}
+body.halloween .card,
+body.halloween .ui-card,
+body.halloween .panel {
+  background: #4a3524;
+  color: #f4efe6;
+  border-color: #ff8c1a;
+}
+body.halloween a {
+  color: #ffb347;
+}
+body.halloween .nav {
+  background: #ff8c1a;
+}
