@@ -24,6 +24,11 @@ New to the castle? Here's what everyone is talking about. 🧙
 | 📋 **Listing** | A monster advertised in the Hiring Hall, with a fee and an available-from date. |
 | 📜 **Application** | An overlord's request to hire a listed monster, with references. |
 | 🖋️ **Hire contract** | The signed agreement once an application is accepted. Has a reference like `HH-7KQ2`. |
+| 📨 **Booking request** | An owner asking for a stay through the app. The front desk approves it (which creates the stay) or declines it. |
+| 👋 **Visit** | An owner coming to see their monster during visiting hours. Booked in half-hour slots. |
+| 📔 **Diary** | The owner's view of one monster: current stay, lair, meals, health summary. |
+| 🪙 **Copper piece (cp)** | 1/100 of a gold piece. Billing v2 stores all money as whole copper pieces (ADR-006). |
+| 🚩 **Feature flag** | A switch in the database that turns a feature on or off, e.g. ENABLE_BILLING_V2. |
 | 🎫 **Ticket** | An internal task: broken portcullis, escaped slime, lair cleaning. |
 | 🐦 **Raven Post** | How we notify customers. Old, beloved, slightly unreliable. |
 | 🪙 **Gold piece (gp)** | The castle's currency. Prices are in gold. |
