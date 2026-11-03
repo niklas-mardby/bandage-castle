@@ -81,6 +81,12 @@ describe('staff modules', () => {
     '/api/flags/detailed',
     '/api/bulletin',
     '/api/notifications',
+    '/api/visits',
+    '/api/visits/slots',
+    '/api/monster-profiles',
+    '/api/supplies/reorder',
+    '/api/jobs',
+    '/api/search?q=sn',
   ])('admin GET %s', async (path) => {
     const res = await agents.admin.get(path)
     expect(res.status).toBe(200)
