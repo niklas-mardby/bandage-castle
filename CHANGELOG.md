@@ -6,6 +6,13 @@ The format is loosely based on [Keep a Changelog](https://keepachangelog.com/). 
 
 ---
 
+## [Unreleased]
+
+### 🐛 Fixed
+- 📖 Species search is case-insensitive again: `dragon` finds Dragon, not only `Dragon`.
+
+---
+
 ## [2024.06] — June 2024
 
 ### ✨ Added
