@@ -6,6 +6,11 @@ The format is loosely based on [Keep a Changelog](https://keepachangelog.com/). 
 
 ---
 
+## Unreleased
+
+### Fixed
+- Species Compendium matches species names and diets regardless of search capitalization.
+
 ## [2024.06] — June 2024
 
 ### ✨ Added

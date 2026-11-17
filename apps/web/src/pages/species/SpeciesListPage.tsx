@@ -11,7 +11,10 @@ export default function SpeciesListPage() {
   if (error) return <p className="page error">{error.message}</p>
   if (loading || !species) return <p className="page">Opening the compendium... 📖</p>
 
-  const filtered = query ? species.filter((s) => s.name.includes(query) || s.diet.includes(query)) : species
+  const search = query.toLowerCase()
+  const filtered = search
+    ? species.filter((s) => s.name.toLowerCase().includes(search) || s.diet.toLowerCase().includes(search))
+    : species
 
   return (
     <div className="page">
